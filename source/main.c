@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <signal.h>
 #include "hardware.h"
+#include "state.h"
+#include "order.h"
 
 static void clear_all_order_lights(){
     HardwareOrder order_types[3] = {
@@ -31,8 +33,11 @@ int main(){
         fprintf(stderr, "Unable to initialize hardware\n");
         exit(1);
     }
-
+	
     signal(SIGINT, sigint_handler);
+
+	
+
 
     printf("=== Example Program ===\n");
     printf("Press the stop button on the elevator panel to exit\n");
