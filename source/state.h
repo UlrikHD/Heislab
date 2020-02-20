@@ -8,6 +8,11 @@
 #ifndef STATE_H
 #define STATE_H
 
+State g_state = IDLE;
+int g_lastFloor;
+bool g_direction;
+bool g_atFloor
+
 /**
 * @brief States used in @c switch in @c main() to call corresponding hardware functions.
 */
@@ -23,7 +28,7 @@ typedef enum{
 * @brief Get global state
 * @return @c State
 */
-State state_getState()
+State state_getState();
 
 
 /**
@@ -31,4 +36,24 @@ State state_getState()
 * @param[in] state State of elevator
 */
 void state_setState(State state);
+
+/**
+* @brief Get last floor
+* @return @c int
+*/
+int state_getLastFloor();
+
+/**
+* @brief Get direction
+* @return @c bool
+*/
+bool state_getDirection();
+
+/**
+* @brief Get atFloor
+* @return @c bool
+*/
+bool state_getAtFloor();
+
+
 #endif

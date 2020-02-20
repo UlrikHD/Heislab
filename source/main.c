@@ -36,7 +36,9 @@ int main(){
 	
     signal(SIGINT, sigint_handler);
 
-	
+	while (1) {
+		order_getOrder();
+	}
 
 
     printf("=== Example Program ===\n");
