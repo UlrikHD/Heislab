@@ -1,3 +1,4 @@
+#pragma once
 /**
 * @file
 * @brief Defines the state machine of the elevator
@@ -6,6 +7,8 @@
 */
 #include <stdlib.h>
 #include <stdbool.h>
+#include <time.h>
+
 #ifndef STATE_H
 #define STATE_H
 
@@ -21,10 +24,11 @@ typedef enum{
 	STOP
 } State;
 
-State g_state = IDLE;
+
 int g_lastFloor;
-bool g_direction;
-bool g_atFloor;
+int g_direction;
+int g_atFloor;
+clock_t g_timer;
 
 /**
 * @brief Get global state
@@ -47,47 +51,47 @@ int state_getLastFloor();
 
 /**
 * @brief Get direction
-* @return @c bool
+* @return direction where 1 is up and 0 is down
 */
-bool state_getDirection();
+int state_getDirection();
 
 /**
 * @brief Get atFloor
-* @return @c bool
+* @return floor where @c 1 is up and @c 0 is down
 */
-bool state_getAtFloor();
+int state_getAtFloor();
 
 /**
  * @brief Decides which direction to go based on desired floor destination parameter
  * @param floor Destination
- * @return bool Where 1 is upwards and 0 is downwards
+ * 
  */
-bool state_setDirection(int floor)
-{
-	int lastFloor = state_getLastFloor();
-	if (floor != lastFloor) 
-	{
-		if (floor < lastFloor)
-		{
-			state_setState(MOVING_DOWN);
-		}
-		else if (floor > lastFloor)
-		{
-			state_setState(MOVING_UP);
-		}
-	}
-	else if (floor = lastFloor)
-	{
-		bool lastDirection = state_getDirection();
-		if (lastDirection) //up
-		{
-			state_setState(MOVING_DOWN);
-		}
-		else if (!lastDirection) //down
-		{
-			state_setState(MOVING_UP);
-		}
-	}
-}
+void state_setDirection(int floor);
+
+/**
+ * @brief Set global value @c g_atFloor 
+ * @param floor @c 1 for true, @c 0 for false
+ */
+void state_setAtFloor(int value);
+
+
+/**
+ * @brief Set last floor
+ * @param floor Int to indicate floor number
+ */
+void state_setLastFloor(int floor);
+
+/**
+ * @brief Start a countdown timer
+ */
+void state_startTimer();
+
+/**
+ * @brief Checks if given amount of @c seconds have passed since timer start
+ * @param seconds 
+ * @return @c 1 if timer is done, @c 0 otherwise
+ */
+int timerDone(int seconds);
+
 
 #endif

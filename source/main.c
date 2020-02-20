@@ -3,7 +3,7 @@
 #include <signal.h>
 #include "hardware.h"
 #include "state.h"
-#include "order.h"
+//#include "order.h"
 
 static void clear_all_order_lights(){
     HardwareOrder order_types[3] = {
@@ -37,7 +37,7 @@ int main(){
     signal(SIGINT, sigint_handler);
 
 	while (1) {
-		order_getOrder();
+		//order_getOrder();
 	}
 
 

@@ -1,0 +1,169 @@
+\hypertarget{state_8h}{}\section{source/state.h File Reference}
+\label{state_8h}\index{source/state.\+h@{source/state.\+h}}
+
+
+Defines the state machine of the elevator.  
+
+
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{state_8h_a5d74787dedbc4e11c1ab15bf487e61f8}\label{state_8h_a5d74787dedbc4e11c1ab15bf487e61f8}} 
+enum \hyperlink{state_8h_a5d74787dedbc4e11c1ab15bf487e61f8}{State} \{ \newline
+{\bfseries I\+D\+LE}, 
+{\bfseries M\+O\+V\+I\+N\+G\+\_\+\+UP}, 
+{\bfseries M\+O\+V\+I\+N\+G\+\_\+\+D\+O\+WN}, 
+{\bfseries A\+T\+\_\+\+F\+L\+O\+OR}, 
+\newline
+{\bfseries S\+T\+OP}
+ \}\begin{DoxyCompactList}\small\item\em States used in {\ttfamily switch} in {\ttfamily main()} to call corresponding hardware functions. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{state_8h_a5d74787dedbc4e11c1ab15bf487e61f8}{State} \hyperlink{state_8h_a084ef7fc6ae99faa826cd8ce291f20f6}{state\+\_\+get\+State} ()
+\begin{DoxyCompactList}\small\item\em Get global state. \end{DoxyCompactList}\item 
+void \hyperlink{state_8h_a9779b04f9ed0e0827e90ef388c42e87a}{state\+\_\+set\+State} (\hyperlink{state_8h_a5d74787dedbc4e11c1ab15bf487e61f8}{State} state)
+\begin{DoxyCompactList}\small\item\em Set global state. \end{DoxyCompactList}\item 
+int \hyperlink{state_8h_adce34f62db3cd8eaf591b66d3f7529b1}{state\+\_\+get\+Last\+Floor} ()
+\begin{DoxyCompactList}\small\item\em Get last floor. \end{DoxyCompactList}\item 
+bool \hyperlink{state_8h_a5080ca6f511e530b4d02c1a1765e1680}{state\+\_\+get\+Direction} ()
+\begin{DoxyCompactList}\small\item\em Get direction. \end{DoxyCompactList}\item 
+bool \hyperlink{state_8h_a5ab364f13dcf25d069ec0bd7eba08563}{state\+\_\+get\+At\+Floor} ()
+\begin{DoxyCompactList}\small\item\em Get at\+Floor. \end{DoxyCompactList}\item 
+bool \hyperlink{state_8h_ac5bca404c2fb3f73353790c09e7c3afe}{state\+\_\+set\+Direction} (int floor)
+\begin{DoxyCompactList}\small\item\em Decides which direction to go based on desired floor destination parameter. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{state_8h_acb178c5269e3ac8bbacbcc41a2bfebcc}\label{state_8h_acb178c5269e3ac8bbacbcc41a2bfebcc}} 
+\hyperlink{state_8h_a5d74787dedbc4e11c1ab15bf487e61f8}{State} {\bfseries g\+\_\+state} = I\+D\+LE
+\item 
+\mbox{\Hypertarget{state_8h_ad69b6794706d0f5d03ea851d10699679}\label{state_8h_ad69b6794706d0f5d03ea851d10699679}} 
+int {\bfseries g\+\_\+last\+Floor}
+\item 
+\mbox{\Hypertarget{state_8h_a54baa79d5bd5f6c150ddbd8c55468bf6}\label{state_8h_a54baa79d5bd5f6c150ddbd8c55468bf6}} 
+bool {\bfseries g\+\_\+direction}
+\item 
+\mbox{\Hypertarget{state_8h_a78f165d5dad36112fe1ea3468a2609cb}\label{state_8h_a78f165d5dad36112fe1ea3468a2609cb}} 
+bool {\bfseries g\+\_\+at\+Floor}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Defines the state machine of the elevator. 
+
+Aksel Næstby 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{state_8h_a5ab364f13dcf25d069ec0bd7eba08563}\label{state_8h_a5ab364f13dcf25d069ec0bd7eba08563}} 
+\index{state.\+h@{state.\+h}!state\+\_\+get\+At\+Floor@{state\+\_\+get\+At\+Floor}}
+\index{state\+\_\+get\+At\+Floor@{state\+\_\+get\+At\+Floor}!state.\+h@{state.\+h}}
+\subsubsection{\texorpdfstring{state\+\_\+get\+At\+Floor()}{state\_getAtFloor()}}
+{\footnotesize\ttfamily bool state\+\_\+get\+At\+Floor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get at\+Floor. 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily bool} 
+\end{DoxyReturn}
+
+
+Definition at line 27 of file state.\+c.
+
+\mbox{\Hypertarget{state_8h_a5080ca6f511e530b4d02c1a1765e1680}\label{state_8h_a5080ca6f511e530b4d02c1a1765e1680}} 
+\index{state.\+h@{state.\+h}!state\+\_\+get\+Direction@{state\+\_\+get\+Direction}}
+\index{state\+\_\+get\+Direction@{state\+\_\+get\+Direction}!state.\+h@{state.\+h}}
+\subsubsection{\texorpdfstring{state\+\_\+get\+Direction()}{state\_getDirection()}}
+{\footnotesize\ttfamily bool state\+\_\+get\+Direction (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get direction. 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily bool} 
+\end{DoxyReturn}
+
+
+Definition at line 22 of file state.\+c.
+
+\mbox{\Hypertarget{state_8h_adce34f62db3cd8eaf591b66d3f7529b1}\label{state_8h_adce34f62db3cd8eaf591b66d3f7529b1}} 
+\index{state.\+h@{state.\+h}!state\+\_\+get\+Last\+Floor@{state\+\_\+get\+Last\+Floor}}
+\index{state\+\_\+get\+Last\+Floor@{state\+\_\+get\+Last\+Floor}!state.\+h@{state.\+h}}
+\subsubsection{\texorpdfstring{state\+\_\+get\+Last\+Floor()}{state\_getLastFloor()}}
+{\footnotesize\ttfamily int state\+\_\+get\+Last\+Floor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get last floor. 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily int} 
+\end{DoxyReturn}
+
+
+Definition at line 17 of file state.\+c.
+
+\mbox{\Hypertarget{state_8h_a084ef7fc6ae99faa826cd8ce291f20f6}\label{state_8h_a084ef7fc6ae99faa826cd8ce291f20f6}} 
+\index{state.\+h@{state.\+h}!state\+\_\+get\+State@{state\+\_\+get\+State}}
+\index{state\+\_\+get\+State@{state\+\_\+get\+State}!state.\+h@{state.\+h}}
+\subsubsection{\texorpdfstring{state\+\_\+get\+State()}{state\_getState()}}
+{\footnotesize\ttfamily \hyperlink{state_8h_a5d74787dedbc4e11c1ab15bf487e61f8}{State} state\+\_\+get\+State (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get global state. 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily State} 
+\end{DoxyReturn}
+
+
+Definition at line 6 of file state.\+c.
+
+\mbox{\Hypertarget{state_8h_ac5bca404c2fb3f73353790c09e7c3afe}\label{state_8h_ac5bca404c2fb3f73353790c09e7c3afe}} 
+\index{state.\+h@{state.\+h}!state\+\_\+set\+Direction@{state\+\_\+set\+Direction}}
+\index{state\+\_\+set\+Direction@{state\+\_\+set\+Direction}!state.\+h@{state.\+h}}
+\subsubsection{\texorpdfstring{state\+\_\+set\+Direction()}{state\_setDirection()}}
+{\footnotesize\ttfamily bool state\+\_\+set\+Direction (\begin{DoxyParamCaption}\item[{int}]{floor }\end{DoxyParamCaption})}
+
+
+
+Decides which direction to go based on desired floor destination parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em floor} & Destination \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily bool} Where 1 is upwards and 0 is downwards 
+\end{DoxyReturn}
+
+
+Definition at line 65 of file state.\+h.
+
+\mbox{\Hypertarget{state_8h_a9779b04f9ed0e0827e90ef388c42e87a}\label{state_8h_a9779b04f9ed0e0827e90ef388c42e87a}} 
+\index{state.\+h@{state.\+h}!state\+\_\+set\+State@{state\+\_\+set\+State}}
+\index{state\+\_\+set\+State@{state\+\_\+set\+State}!state.\+h@{state.\+h}}
+\subsubsection{\texorpdfstring{state\+\_\+set\+State()}{state\_setState()}}
+{\footnotesize\ttfamily void state\+\_\+set\+State (\begin{DoxyParamCaption}\item[{\hyperlink{state_8h_a5d74787dedbc4e11c1ab15bf487e61f8}{State}}]{state }\end{DoxyParamCaption})}
+
+
+
+Set global state. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em state} & State of elevator \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 11 of file state.\+c.
+
