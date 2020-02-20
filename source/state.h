@@ -4,14 +4,11 @@
 * 
 * Aksel Næstby
 */
-
+#include <stdlib.h>
+#include <stdbool.h>
 #ifndef STATE_H
 #define STATE_H
 
-State g_state = IDLE;
-int g_lastFloor;
-bool g_direction;
-bool g_atFloor
 
 /**
 * @brief States used in @c switch in @c main() to call corresponding hardware functions.
@@ -23,6 +20,11 @@ typedef enum{
 	AT_FLOOR,
 	STOP
 } State;
+
+State g_state = IDLE;
+int g_lastFloor;
+bool g_direction;
+bool g_atFloor;
 
 /**
 * @brief Get global state
@@ -55,5 +57,37 @@ bool state_getDirection();
 */
 bool state_getAtFloor();
 
+/**
+ * @brief Decides which direction to go based on desired floor destination parameter
+ * @param floor Destination
+ * @return bool Where 1 is upwards and 0 is downwards
+ */
+bool state_setDirection(int floor)
+{
+	int lastFloor = state_getLastFloor();
+	if (floor != lastFloor) 
+	{
+		if (floor < lastFloor)
+		{
+			state_setState(MOVING_DOWN);
+		}
+		else if (floor > lastFloor)
+		{
+			state_setState(MOVING_UP);
+		}
+	}
+	else if (floor = lastFloor)
+	{
+		bool lastDirection = state_getDirection();
+		if (lastDirection) //up
+		{
+			state_setState(MOVING_DOWN);
+		}
+		else if (!lastDirection) //down
+		{
+			state_setState(MOVING_UP);
+		}
+	}
+}
 
 #endif

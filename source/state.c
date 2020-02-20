@@ -1,5 +1,5 @@
 #include "state.h"
-
+#include "hardware.h"
 #include <stdlib.h>
 
 
@@ -31,25 +31,32 @@ bool state_getAtFloor()
 
 
 
-while (1) {
-
-	switch (state) {
-	case IDLE: {
-		break;
-	}
-	case MOVING_UP: {
-		hardware_command_movement(HardwareMovement HARDWARE_MOVEMENT_UP);
-		break;
-	}
-	case MOVING_DOWN: {
-		break;
-	}
-	case AT_FLOOR: {
-		break;
-	}
-	case default:
-	case STOP: {
-		break;
-	}
+state_stateSwitch()
+{
+		
+	switch (state_getState())
+	{
+		case IDLE: 
+		{
+			break;
+		}
+		case MOVING_UP: 
+		{
+			hardware_command_movement(HARDWARE_MOVEMENT_UP);
+			break;
+		}
+		case MOVING_DOWN: 
+		{
+			break;
+		}
+		case AT_FLOOR: 
+		{
+			break;
+		}
+		default:
+		case STOP: 
+		{
+			break;
+		}
 	}
 }
