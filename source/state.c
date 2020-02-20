@@ -2,7 +2,6 @@
 #include "hardware.h"
 #include <stdlib.h>
 
-
 State g_state = IDLE;
 State state_getState() {
 	return g_state;
