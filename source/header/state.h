@@ -19,8 +19,6 @@
 */
 typedef enum{
 	IDLE,
-	MOVING_UP,
-	MOVING_DOWN,
 	AT_FLOOR,
 	STOP
 } State;

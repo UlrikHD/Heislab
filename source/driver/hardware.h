@@ -7,8 +7,6 @@
  *
  * Kolbjørn Austreng
  */
-#pragma once
-
 #ifndef HARDWARE_H
 #define HARDWARE_H
 #define HARDWARE_NUMBER_OF_FLOORS 4
