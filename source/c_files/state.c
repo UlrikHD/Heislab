@@ -2,60 +2,38 @@
 #include "hardware.h"
 #include <stdlib.h>
 
-State g_state = IDLE;
-State state_getState() {
-	return g_state;
-}
 
-void state_setState(State state) {
-	g_state = state;
-	return;
-}
-
-int state_getLastFloor(){
-	return g_lastFloor;
-}
-
-int state_getDirection(){
-	return g_direction;
-}
-
-int state_getAtFloor(){
-	return g_atFloor;
-}
-
-void state_setDirection(int floor){
-	int lastFloor = state_getLastFloor();
-	if (floor != lastFloor) {
-		if (floor < lastFloor){
+State state_setDirection(int destinationFloor, Elevator* p_elev){
+	int lastFloor = p_elev->g_floor;
+	if (destinationFloor != lastFloor) {
+		if (destinationFloor < lastFloor){
 			state_setState(MOVING_DOWN);
-			//state_stateSwitch();
 		}
-		else if (floor > lastFloor){
+		else if (destinationFloor > lastFloor){
 			state_setState(MOVING_UP);
-			//state_stateSwitch();
 		}
 	}
+
+
 	else if (floor == lastFloor){
-		bool lastDirection = state_getDirection();
-		if (lastDirection) {//up
+		int above = p_elev->g_above;
+
+		if (above) {
 			state_setState(MOVING_DOWN);
-			//state_stateSwitch();
 		}
-		else if (!lastDirection) {//down
+		else if (!above) {
 			state_setState(MOVING_UP);
-			//state_stateSwitch();
 		}
 	}
 }
 
-void state_startTimer(){
-	g_timer = clock();
+void state_startTimer(clock_t* p_time){
+	*p_newTimeStamp = clock();
 }
 
-int state_timerDone(int seconds){
+int state_timerDone(int seconds, clock_t* prevTimer){
 	clock_t currentTime = clock();
-	double timeElapsed = difftime(currentTime, g_timer);
+	double timeElapsed = difftime(currentTime, *prevTimer);
 	
 	if (timeElapsed < seconds){
 		return 0;
@@ -66,24 +44,11 @@ int state_timerDone(int seconds){
 	return 0;
 }
 
-void state_setAtFloor(int value){
-	if(value == 1 || value == 0){
-		g_atFloor = value;
-	}
-	return;
-}
-
-void state_setLastFloor(int floor){
-	if(0 < floor || floor < 5){
-		g_lastFloor = floor;
-	}
-	return;
-}
 
 
-void state_stateSwitch(){
+void state_stateSwitch(Elevator* p_elev){
 		
-	switch (state_getState()){
+	switch (p_elev->state){
 		case IDLE: {
 			printf("idle\n");
 			hardware_command_door_open(0);

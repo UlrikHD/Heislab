@@ -1,9 +1,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
+#include <time.h>
+
 #include "hardware.h"
 #include "state.h"
 //#include "order.h"
+
+
+typedef struct {
+    int g_floor;
+    int g_above;
+    int g_direction;
+    int g_atFloor;
+    State g_state = IDLE;
+
+
+    int orders[floorsNum][buttonNum]
+
+} Elevator
+
+clock_t g_timer;
+
 
 static void clear_all_order_lights(){
     HardwareOrder order_types[3] = {

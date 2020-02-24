@@ -1,4 +1,6 @@
-#pragma once
+#ifndef ELEVATOR_H
+#define ELEVATOR_H
+
 #include "state.h"
 
 /**
@@ -10,15 +12,23 @@ int floorsNun = 4
 */
 int buttnonNum
 
+
+
+
+//jeg tror dette er alt vi trenger i denne h-filen
 /**
 * @brief Struct that contains all the variables of the elevator.
-*/
-tyepdef struct {
-    int floor;
-    int direction;
-    State status;
+*//*
+typedef struct {
+    int g_floor;
+    int g_above;
+    int g_direction;
+    int g_atFloor;
+    State g_state = IDLE;
     
 
     int orders[floorsNum][buttonNum]
 
 } Elevator
+
+#endif*/
