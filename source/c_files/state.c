@@ -45,6 +45,15 @@ int state_timerDone(int seconds, clock_t* prevTimer){
 }
 
 
+int state_atFloor() {
+	for (int i = 0; i < HARDWARE_NUMBER_OF_FLOORS - 1; i++) {
+		if (hardware_read_floor_sensor(i)) {
+			return i;
+		}
+	}
+	return -1;
+}
+
 
 void state_stateSwitch(Elevator* p_elev){
 		

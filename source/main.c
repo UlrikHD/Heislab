@@ -13,7 +13,7 @@ typedef struct {
     int g_above;
     int g_direction;
     int g_atFloor;
-    State g_state = IDLE;
+    State g_state;
 
 
     int orders[floorsNum][buttonNum]
@@ -60,7 +60,43 @@ int main(){
     else {
         printf("false");
     }
-    state_setState(MOVING_UP);
+
+
+
+    Elevator elevator;
+
+    while (state_atFloor() = -1) {
+        hardware_command_movement(HardwareMovement HARDWARE_MOVEMENT_DOWN);
+    }
+    hardware_command_movement(HardwareMovement HARDWARE_MOVEMENT_STOP);
+
+
+    elevator.g_atFloor = 1;
+    elevator.g_floor = state_atFloor();
+    elevator.g_above = 1;
+    elevator.g_direction = 0;
+    elevator.g_state = IDLE;
+
+
+    while (1) {
+        if (hardware_read_stop_signal()) {
+            elevator.g_state = STOP;
+            state_stateSwitch(&elevator);
+        }
+        switch (order_getDirection(elevator)) {
+            case 1: elevator.g_state(MOVING_UP); break;
+            case 0: elevator.g_state(AT_FLOOR); break;
+            case -1: elevator.g_state(MOVING_DOWN); break;
+        }
+        state_stateSwitch(&elevator);
+        
+    }
+
+
+
+
+
+
 	while (state_getAtFloor()!=3) {
 		
 	};

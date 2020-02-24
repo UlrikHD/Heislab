@@ -55,4 +55,10 @@ int state_timerDone(int seconds, clock_t* p_prevTimer);
 */
 void state_stateSwitch(Elevator* p_elev);
 
+/**
+* @brief Checks all floor sensors.
+* @return floor Floor number (0 indexed) or -1 if not a floor
+*/
+int state_atFloor();
+
 #endif
