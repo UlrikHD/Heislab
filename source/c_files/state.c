@@ -31,17 +31,19 @@ void state_startTimer(clock_t* p_time){
 	*p_newTimeStamp = clock();
 }
 
-int state_timerDone(int seconds, clock_t* prevTimer){
+int state_timerDone(int seconds, Elevator* p_elev){
 	clock_t currentTime = clock();
-	double timeElapsed = difftime(currentTime, *prevTimer);
+	clock_t prevTime = p_elev->g_timer;
+	double timeElapsed = difftime(currentTime, prevTime);
 	
 	if (timeElapsed < seconds){
+		p_elev->g_timerDone = 0;
 		return 0;
 	}
-	else if (timeElapsed >= seconds){
-		return 1; //timer done
+	else {
+		p_elev->g_timerDone = 1;
+		return 1;
 	}
-	return 0;
 }
 
 
@@ -54,69 +56,69 @@ int state_atFloor() {
 	return -1;
 }
 
+int state_checkStopButton(Elevator* p_elev) {
+	if (hardware_read_stop_signal()) {
+		p_elev->g_state = STOP;
+		state_stateSwitch(p_elev);
+	}
+}
+
 
 void state_stateSwitch(Elevator* p_elev){
-		
 	switch (p_elev->state){
 		case IDLE: {
 			printf("idle\n");
 			hardware_command_door_open(0);
-			hardware_command_movement(HARDWARE_MOVEMENT_STOP);
+			state_checkStopButton(p_elev);
 			break;
 		}
 		case MOVING_UP: {
-			state_setAtFloor(0);
-			printf("moving up\n");
 			hardware_command_door_open(0);
+			state_checkStopButton(p_elev);
 			hardware_command_movement(HARDWARE_MOVEMENT_UP);
+			p_elev->g_atFloor = 0;
+			p_elev->g_above = 1;
+			p_elev->g_direction = 1;
+			printf("moving up\n");
 			break;
 		}
 		case MOVING_DOWN: {
-			state_setAtFloor(0);
-			printf("moving down\n");
 			hardware_command_door_open(0);
+			state_checkStopButton(p_elev);
 			hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
+			p_elev->g_atFloor = 0;
+			p_elev->g_above = 0;
+			p_elev->g_direction = 0;
+			printf("moving down\n");
 			break;
 		}
 		case AT_FLOOR: {
 			printf("at floor\n");
+			p_elev->g_floor = state_atFloor();
+			state_checkStopButton(p_elev);
 			hardware_command_movement(HARDWARE_MOVEMENT_STOP);
-			int sensorRead = 0;
-			for (int i = 1; i<5;i++){
-				if(hardware_read_floor_sensor(i))
-				{
-					sensorRead = 1;
-					state_setAtFloor(1);
-					state_setLastFloor(i);
-					break;
-				}
-				else if (i == 4) //sensor doesnt register
-				{
-					state_setState(IDLE);
-					sensorRead = 0;
-				}
-			}
-			if(sensorRead == 0){break;}
-			int currentFloor = state_getLastFloor();
-			hardware_command_floor_indicator_on(currentFloor);
+			hardware_command_floor_indicator_on(p_elev->g_floor);
 			hardware_command_door_open(1);
-			state_startTimer(3);
-			//empty orders who have destination here:
-			//order_removeOrder(this_order);
+			state_startTimer(p_elev->g_timer);
+			p_elev->g_atFloor = 1;
 			break;
 		}
-		default:
 		case STOP: {
 			hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 			hardware_command_stop_light(1);
-			if(state_getAtFloor()){
+			if(p_elev->g_atFloor){
 				hardware_command_door_open(1);
 			}
 			state_startTimer();
 			//flush orders
-			//dont take orders?
+			//dont take order?
+			//restart main
 
 			break;
+		}
+		default: { //necessary?
+			p_elev->state = STOP;
+			state_stateSwitch(p_elev);
 		}
 	}
 }

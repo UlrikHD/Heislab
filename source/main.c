@@ -14,13 +14,13 @@ typedef struct {
     int g_direction;
     int g_atFloor;
     State g_state;
-
+    clock_t g_timer;
+    int g_timerDone;
 
     int orders[floorsNum][buttonNum]
 
 } Elevator
 
-clock_t g_timer;
 
 
 static void clear_all_order_lights(){
@@ -79,14 +79,68 @@ int main(){
 
 
     while (1) {
-        if (hardware_read_stop_signal()) {
-            elevator.g_state = STOP;
-            state_stateSwitch(&elevator);
-        }
+        state_checkStopButton(&elevator);
         switch (order_getDirection(elevator)) {
-            case 1: elevator.g_state(MOVING_UP); break;
-            case 0: elevator.g_state(AT_FLOOR); break;
-            case -1: elevator.g_state(MOVING_DOWN); break;
+            case 1: elevator.g_state = MOVING_UP; break;
+            case 0: elevator.g_state = AT_FLOOR; break;
+            case -1: elevator.g_state = MOVING_DOWN; break;
+        }
+        state_stateSwitch(&elevator);
+        while (!order_queueIsEmpty()) {
+            int floor = state_atFloor();
+            if (floor > -1) {
+                elevator.g_atFloor = 1;
+                elevator.g_floor = floor;
+                elevator.g_above = 0;
+
+                int goOut = hardware_read_order(floor, HardwareOrder HARDWARE_ORDER_INSIDE);
+                if (goOut) {
+                    State temp = elevator.g_state;
+                    elevator.g_state = AT_FLOOR;
+                    state_stateSwitch(&elevator);
+                    if (elevator.g_timerDone) {
+                        if (order_queueIsEmpty()) {
+                            elevator.g_state = IDLE;
+                        }
+                        else {
+                            elevator.g_state = temp;
+                        }
+                        state_stateSwitch(&elevator);
+                    }
+                }
+
+                switch (elevator.g_state) {
+                    case MOVING_DOWN: {
+                        int goDown = hardware_read_order(floor, HardwareOrder HARDWARE_ORDER_DOWN);
+                        if (goDown) {
+                            elevator.g_state = AT_FLOOR;
+                            state_stateSwitch(&elevator);
+                            if (state_timerDone(3, &elevator)) {
+                                elevator.g_state = MOVING_DOWN;
+                                state_checkStopButton(&elevator);
+                                hardware_command_movement(HardwareMovement HARDWARE_MOVEMENT_DOWN);
+                            }
+                        }
+                        break;
+                    }
+                    case MOVING_UP: {
+                        int goUp = hardware_read_order(floor, HardwareOrder HARDWARE_ORDER_UP);
+                        if (goUp) {
+                            elevator.g_state = AT_FLOOR;
+                            state_stateSwitch(&elevator);
+                            if (state_timerDone(3, &elevator) && !hardware_read_obstruction_signal) {
+                                hardware_command_door_open(0);
+                                elevator.g_state = MOVING_UP;
+                                state_checkStopButton(&elevator);
+                                hardware_command_movement(HardwareMovement HARDWARE_MOVEMENT_UP);
+                            }
+                        }
+                        g_above = 1;
+                        break;
+                    }
+                }
+                elevator.g_atFloor = 0;
+            }
         }
         state_stateSwitch(&elevator);
         
@@ -106,14 +160,7 @@ int main(){
 
 
 
-
-
-
-
-
-
-
-    
+              
 
     return 0;
 }

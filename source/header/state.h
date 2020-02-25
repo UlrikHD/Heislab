@@ -46,7 +46,7 @@ void state_startTimer(clock_t* p_time);
  * @param p_prevTimer Pointer to global variable @p g_timer
  * @return @c 1 if timer is done, @c 0 otherwise
  */
-int state_timerDone(int seconds, clock_t* p_prevTimer);
+int state_timerDone(int seconds, Elevator* p_elev);
 
 /**
 * @brief At new state or desire to execute function based on state
@@ -60,5 +60,12 @@ void state_stateSwitch(Elevator* p_elev);
 * @return floor Floor number (0 indexed) or -1 if not a floor
 */
 int state_atFloor();
+
+/**
+* @brief Checks if stop button is pressed, changes state, and execute accordingly if pressed
+* @param p_elev Pointer to elevator object
+* @return int Where 1 is button pressed and 0 otherwise
+*/
+int state_checkStopButton(Elevator* p_elev);
 
 #endif
