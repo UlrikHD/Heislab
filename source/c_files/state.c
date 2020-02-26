@@ -27,8 +27,8 @@ State state_setDirection(int destinationFloor, Elevator* p_elev){
 	}
 }
 
-void state_startTimer(clock_t* p_time){
-	*p_newTimeStamp = clock();
+void state_startTimer(Elevator* p_elev){
+	p_elev->g_timer = clock();
 }
 
 int state_timerDone(int seconds, Elevator* p_elev){
@@ -74,7 +74,6 @@ void state_stateSwitch(Elevator* p_elev){
 		}
 		case MOVING_UP: {
 			hardware_command_door_open(0);
-			state_checkStopButton(p_elev);
 			hardware_command_movement(HARDWARE_MOVEMENT_UP);
 			p_elev->g_atFloor = 0;
 			p_elev->g_above = 1;

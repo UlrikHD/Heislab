@@ -26,6 +26,8 @@ typedef struct {
 	State g_state;
 	clock_t g_timer;
 	int g_timerDone;
+	int g_stop;
+	int g_obstruction;
 
 	int orders[floorsNum][buttonNum]
 

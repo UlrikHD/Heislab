@@ -36,9 +36,9 @@ State state_setDirection(int destinationFloor, Elevator* p_elev);
 
 /**
  * @brief Set new time for global var g_timer to start timer
- * @param p_time New time stamp to set
+ * @param p_elev @c Pointer to @c Elevator object
  */
-void state_startTimer(clock_t* p_time);
+void state_startTimer(Elevator* p_elev);
 
 /**
  * @brief Checks if given amount of @c seconds have passed since timer start
