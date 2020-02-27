@@ -15,20 +15,24 @@
 
 
 
-//jeg tror dette er alt vi trenger i denne h-filen
 /**
 * @brief Struct that contains all the variables of the elevator.
 */
 typedef struct {
+
     int currentFloor;
     int previousFloor;
     int direction;
     int buttnonNum = 3;
     int floorsNum = HARDWARE_NUMBER_OF_FLOORS;
-    State state = IDLE;
+	clock_t timer;
+	int timerDone;
+	int obstruction
+    State state;
     
 
     bool orders[floorsNum][buttonNum]
+
 
 } Elevator
 
