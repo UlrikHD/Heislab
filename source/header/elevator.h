@@ -6,11 +6,11 @@
 /**
 * @brief Variable that decides number of floors
 */
-int floorsNun = 4
+//int floorsNum = HARDWARE_NUMBER_OF_FLOORS
 /**
 * @brief Variable that decides number of order buttons (up, down, requested floor)
 */
-int buttnonNum
+//int buttnonNum = 3
 
 
 
@@ -18,17 +18,18 @@ int buttnonNum
 //jeg tror dette er alt vi trenger i denne h-filen
 /**
 * @brief Struct that contains all the variables of the elevator.
-*//*
+*/
 typedef struct {
-    int g_floor;
-    int g_above;
-    int g_direction;
-    int g_atFloor;
-    State g_state = IDLE;
+    int currentFloor;
+    int previousFloor;
+    int direction;
+    int buttnonNum = 3;
+    int floorsNum = HARDWARE_NUMBER_OF_FLOORS;
+    State state = IDLE;
     
 
-    int orders[floorsNum][buttonNum]
+    bool orders[floorsNum][buttonNum]
 
 } Elevator
 
-#endif*/
+#endif
