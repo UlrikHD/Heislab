@@ -1,17 +1,25 @@
 #include "../header/orders.h"
 
+void orders_lightOrders(Elevator* elevator) {
+	for (int i = 0; i < elevator->floorsNum; ++i) {
+		for (int j = HARDWARE_ORDER_UP; j <= HARDWARE_ORDER_DOWN; ++j) {
+			hardware_command_order_light(i, j, elevator->orders[i][j]);
+		}
+	}
+}
+
 int orders_getDirection(Elevator* elevator) {
-	if (elevator.direction == 1) {
-		for (int i = elevator.currentFloor + 1; i < elevator.floorsNum; ++i) {
-			for (int j = 0; j < elevator.buttonNum; ++j) {
-				if (elevator.orders[i][j]) {
+	if (elevator->direction == 1) {
+		for (int i = elevator->currentFloor + 1; i < elevator->floorsNum; ++i) {
+			for (int j = 0; j < elevator->buttonNum; ++j) {
+				if (elevator->orders[i][j]) {
 					return 1;
 				}
 			}
 		}
-		for (int i = elevator.currentFloor; i >= 0; --i) {
-			for (int j = 0; j < elevator.buttonNum; ++j) {
-				if (elevator.orders[i][j]) {
+		for (int i = elevator->currentFloor; i >= 0; --i) {
+			for (int j = 0; j < elevator->buttonNum; ++j) {
+				if (elevator->orders[i][j]) {
 					return -1;
 				}
 			}
@@ -19,27 +27,27 @@ int orders_getDirection(Elevator* elevator) {
 	}
 
 	else {
-		for (int i = elevator.currentFloor - 1; i >= 0; --i) {
-			for (int j = 0; j < elevator.buttonNum; ++j) {
-				if (elevator.orders[i][j]) {
+		for (int i = elevator->currentFloor - 1; i >= 0; --i) {
+			for (int j = 0; j < elevator->buttonNum; ++j) {
+				if (elevator->orders[i][j]) {
 					return -1;
 				}
 			}
 		}
-		for (int i = elevator.currentFloor; i < elevator.floorsNum; ++i) {
-			for (int j = 0; j < elevator.buttonNum; ++j) {
-				if (elevator.orders[i][j]) {
+		for (int i = elevator->currentFloor; i < elevator->floorsNum; ++i) {
+			for (int j = 0; j < elevator->buttonNum; ++j) {
+				if (elevator->orders[i][j]) {
 					return 1;
 				}
 			}
 		}
 	}
-	return elevator.direction;
+	return elevator->direction;
 }
 
 bool orders_noOrders(Elevator* elevator) {
-	for (int i = 0; i < elevator->floorsNum) {
-		for (int j = 0; j < elevator->buttonNum) {
+	for (int i = 0; i < elevator->floorsNum; ++i) {
+		for (int j = 0; j < elevator->buttonNum; ++j) {
 			if (elevator->orders[i][j]) {
 				return false;
 			}
@@ -49,20 +57,34 @@ bool orders_noOrders(Elevator* elevator) {
 }
 
 void orders_emptyOrders(Elevator* elevator) {
-	for (int i = 0; i < elevator->floorsNum) {
-		for (int j = 0; j < elevator->buttonNum) {
+	for (int i = 0; i < elevator->floorsNum; ++i) {
+		for (int j = 0; j < elevator->buttonNum; ++j) {
 			elevator->orders[i][j] = false;
 		}
 	}
 }
 
 void orders_getOrders(Elevator* elevator) {
-	for (int i = 0; i < elevator->floorNum; ++i) {
-		elevator->orders[i][ORDER_UP] = hardware_read_order(i, HARDWARE_ORDER_UP);
-		elevator->orders[i][ORDER_DOWN] = hardware_read_order(i, HARDWARE_ORDER_DOWN);
-		elevator->orders[i][ORDER_INTERNAL] = hardware_read_order(i, HARDWARE_ORDER_INSIDE);
+	for (int i = 0; i < elevator->floorsNum; ++i) {
+		if (hardware_read_order(i, HARDWARE_ORDER_UP)) {
+			elevator->orders[i][ORDER_UP] = hardware_read_order(i, HARDWARE_ORDER_UP);
+		}
+		if (hardware_read_order(i, HARDWARE_ORDER_DOWN)) {
+			elevator->orders[i][ORDER_DOWN] = hardware_read_order(i, HARDWARE_ORDER_DOWN);
+		}
+		if (hardware_read_order(i, HARDWARE_ORDER_INSIDE)) {
+			elevator->orders[i][ORDER_INTERNAL] = hardware_read_order(i, HARDWARE_ORDER_INSIDE);
+		}
+	}
+	orders_lightOrders(elevator);
+}
+
+void orders_orderDone(Elevator* elevator) {
+	if (elevator->state = AT_FLOOR) {
+		elevator->orders[elevator->currentFloor] = {false, false, false};
 	}
 }
+
 
 bool orders_stopAtFloor(Elevator* elevator) {
 	if (elevator->direction == 1) {
@@ -71,7 +93,7 @@ bool orders_stopAtFloor(Elevator* elevator) {
 				hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 				return true;
 			}
-		else if ((order_getDirection(elevator) == -1) &&
+		else if ((orders_getDirection(elevator) == -1) &&
 				elevator->orders[elevator->currentFloor][ORDER_DOWN]) {
 					hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 					return true;
@@ -83,7 +105,7 @@ bool orders_stopAtFloor(Elevator* elevator) {
 				hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 				return true;
 			}
-		else if ((order_getDirection(elevator) == 1) &&
+		else if ((orders_getDirection(elevator) == 1) &&
 				elevator->orders[elevator->currentFloor][ORDER_UP]) {
 					hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 					return true;
@@ -100,3 +122,5 @@ bool orders_activatedStopButton() {
 		return false;
 	}
 }
+
+

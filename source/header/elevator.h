@@ -3,41 +3,35 @@
 
 #include <time.h>
 #include <stdbool.h>
+#include "../driver/hardware.h"
+#include "../driver/io.h"
+#include "../driver/channels.h"
+
+#define BUTTON_NUM 3
 
 typedef enum State{
     IDLE,
     MOVING,
 	AT_FLOOR,
-	STOP
+	EMERGENCY_STOP
 } State;
-
-
-
-/**
-* @brief Variable that decides number of floors
-*/
-//int floorsNum = HARDWARE_NUMBER_OF_FLOORS
-/**
-* @brief Variable that decides number of order buttons (up, down, requested floor)
-*/
-//int buttnonNum = 3
 
 
 /**
 * @brief Struct that contains all the variables of the elevator.
 */
-typedef struct {
+typedef struct Elevator {
 
     int currentFloor;
     int nextFloor;
     int direction;
-    int buttnonNum = 3;
-    int floorsNum = HARDWARE_NUMBER_OF_FLOORS;
+    int buttonNum;
+    int floorsNum;
 	clock_t timer;
-    double doorOpenTime = 6000000 //in microseconds
-    bool obstruction false;
-    State state = IDLE;
-    bool orders[floorsNum][buttonNum]
+    double doorOpenTime; //in microseconds
+    bool obstruction;
+    State state;
+    bool orders[HARDWARE_NUMBER_OF_FLOORS][BUTTON_NUM];
 
 
 } Elevator;

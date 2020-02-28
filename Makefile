@@ -1,7 +1,9 @@
-SOURCES := main.c  state.c 
+SOURCES := main.c state.c orders.c elevator.c
 
 SOURCE_DIR := source
 BUILD_DIR := build
+HEADER_DIR := source/header
+C_DIR := source/c_files
 
 OBJ := $(patsubst %.c,$(BUILD_DIR)/%.o,$(SOURCES))
 
@@ -28,6 +30,11 @@ $(BUILD_DIR)/driver/%.o : $(SOURCE_DIR)/driver/%.c | $(BUILD_DIR)
 
 $(DRIVER_ARCHIVE) : $(DRIVER_SOURCE:%.c=$(BUILD_DIR)/driver/%.o)
 	ar rcs $@ $^
+
+
+
+
+
 
 .PHONY: clean
 clean :

@@ -1,11 +1,11 @@
 #include "../header/state.h"
 
 
-void state_startTimer(Elevator* p_elev){
+void state_startTimer(Elevator* p_elev) {
 	p_elev->timer = clock();
 }
 
-bool state_timerDone(Elevator* elevator){
+bool state_timerDone(Elevator* elevator) {
 	if (clock() - elevator->timer < elevator->doorOpenTime){
 		return false;
 	}
@@ -39,7 +39,7 @@ void state_findFloor(Elevator* elevator) {
 
 
 
-void state_stateSwitch(Elevator* p_elev){
+void state_stateSwitch(Elevator* p_elev) {
 	switch (p_elev->state){
 		case IDLE: {
 			printf("Idle\n");
@@ -68,10 +68,11 @@ void state_stateSwitch(Elevator* p_elev){
 			hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 			hardware_command_floor_indicator_on(p_elev->currentFloor);
 			hardware_command_door_open(1);
+			orders_orderDone(p_elev);
 			state_startTimer(p_elev);
 			break;
 		}
-		case STOP: {
+		case EMERGENCY_STOP: {
 			hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 			hardware_command_stop_light(1);
 			if(state_atFloor != -1){
