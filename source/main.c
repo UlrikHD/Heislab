@@ -5,15 +5,15 @@
 
 
 #include "hardware.h"
-#include "state.h"
+/*#include "state.h"
 #include "orders.h"
 #include "elevator.h"
+*/
 
 
 
 
-
-
+/*
 static void clear_all_order_lights() {
     HardwareOrder order_types[3] = {
         HARDWARE_ORDER_UP,
@@ -35,7 +35,7 @@ static void sigint_handler(int sig) {
     hardware_command_movement(HARDWARE_MOVEMENT_STOP);
     exit(0);
 }
-
+*/
 int main() {/*
     int error = hardware_init();
     if(error != 0){

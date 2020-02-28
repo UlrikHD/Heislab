@@ -14,7 +14,6 @@ bool state_timerDone(Elevator* elevator) {
 	}
 }
 
-
 int state_atFloor() {
 	for (int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; ++i) {
 		if (hardware_read_floor_sensor(i)) {
@@ -23,8 +22,7 @@ int state_atFloor() {
 	}
 	return -1;
 }
-
-
+/*
 void state_findFloor(Elevator* elevator) {
 	if (state_atFloor() == -1) {
 		if (elevator->currentFloor < elevator->nextFloor) {
@@ -36,9 +34,7 @@ void state_findFloor(Elevator* elevator) {
 		elevator->state = MOVING;
 	}
 }
-
-
-
+*/
 void state_stateSwitch(Elevator* p_elev) {
 	switch (p_elev->state){
 		case IDLE: {
@@ -81,9 +77,9 @@ void state_stateSwitch(Elevator* p_elev) {
 			orders_emptyOrders(p_elev);
 			break;
 		}
-		default: { //necessary?
-			p_elev->g_state = STOP;
-			state_stateSwitch(p_elev);
+		default: {
+			p_elev->state = IDLE;
+			break;
 		}
 	}
 }
