@@ -3,15 +3,10 @@
 #include <signal.h>
 #include <time.h>
 
-
 #include "hardware.h"
 #include "state.h"
 #include "orders.h"
 #include "elevator.h"
-
-
-
-
 
 
 static void clear_all_order_lights() {
@@ -106,8 +101,14 @@ int main() {
 			case EMERGENCY_STOP:
 				if (!orders_activatedStopButton()) {
 					hardware_command_stop_light(0);
-					elevator->state = IDLE;
-					state_stateSwitch(elevator);
+					orders_getOrders(elevator);
+					if (state_timerDone(elevator) && !elevator_doorObstructed(elevator)) {
+						hardware_command_door_open(0);
+						if (!orders_noOrders(elevator)) {
+							elevator->state = MOVING;
+							state_stateSwitch(elevator);
+						}
+					}
 				}
 				break;
 			
@@ -118,6 +119,6 @@ int main() {
 		}
 		
 	}
-	printf("n");
+	printf("1");
     return 0;
 }

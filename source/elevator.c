@@ -1,7 +1,8 @@
 #include "elevator.h"
 
 bool elevator_doorObstructed(Elevator* elevator) {
-	if ((hardware_read_obstruction_signal() == 1) /*&& io_read_bit(LIGHT_DOOR_OPEN)*/) {
+	if ((hardware_read_obstruction_signal() == 1) && io_read_bit(LIGHT_DOOR_OPEN)) {
+		elevator->timer = clock();
 		return true;
 	}
 	else {
@@ -16,7 +17,7 @@ void elevator_initElevator(Elevator* elevator) {
 		elevator->buttonNum = BUTTON_NUM;
 		elevator->floorsNum = HARDWARE_NUMBER_OF_FLOORS;
 		elevator->timer = clock();
-		elevator->doorOpenTime = 300000; //in microseconds
+		elevator->doorOpenTime = 3000000; //in microseconds
 		elevator->obstruction = false;
 		elevator->state = IDLE;
 		for (int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; ++i) {

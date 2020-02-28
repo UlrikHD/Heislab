@@ -2,9 +2,9 @@
 
 void orders_lightOrders(Elevator* elevator) {
 	for (int i = 0; i < elevator->floorsNum; ++i) {
-		for (int j = HARDWARE_ORDER_UP; j <= HARDWARE_ORDER_DOWN; ++j) {
-			hardware_command_order_light(i, j, elevator->orders[i][j]);
-		}
+		hardware_command_order_light(i, HARDWARE_ORDER_UP, elevator->orders[i][ORDER_UP]);
+		hardware_command_order_light(i, HARDWARE_ORDER_DOWN, elevator->orders[i][ORDER_DOWN]);
+		hardware_command_order_light(i, HARDWARE_ORDER_INSIDE, elevator->orders[i][ORDER_INTERNAL]);
 	}
 }
 
@@ -62,6 +62,7 @@ void orders_emptyOrders(Elevator* elevator) {
 			elevator->orders[i][j] = false;
 		}
 	}
+	orders_lightOrders(elevator);
 }
 
 void orders_getOrders(Elevator* elevator) {

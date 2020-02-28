@@ -41,19 +41,19 @@ void state_stateSwitch(Elevator* p_elev) {
 	switch (p_elev->state){
 		case IDLE: {
 			printf("Idle\n");
-			hardware_command_door_open(0);
+			//hardware_command_door_open(0);
 			break;
 		}
 		case MOVING: {
-			hardware_command_door_open(0);
+			//hardware_command_door_open(0);
 			if (orders_getDirection(p_elev) == 1) {
 				hardware_command_movement(HARDWARE_MOVEMENT_UP);
-				p_elev->nextFloor += p_elev->currentFloor;
+				p_elev->nextFloor = p_elev->currentFloor + 1;
 				printf("Moving up\n");
 			}
 			else {
 				hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
-				p_elev->nextFloor -= p_elev->currentFloor;
+				p_elev->nextFloor = p_elev->currentFloor - 1;
 				printf("Moving down\n");
 			}
 			
@@ -74,6 +74,7 @@ void state_stateSwitch(Elevator* p_elev) {
 			hardware_command_stop_light(1);
 			if(state_atFloor() != -1){
 				hardware_command_door_open(1);
+				p_elev->timer = clock();
 			}
 			orders_emptyOrders(p_elev);
 			break;
