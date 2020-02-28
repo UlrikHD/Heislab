@@ -10,10 +10,6 @@
 #include "elevator.h"
 
 
-Elevator* elevator;
-
-
-
 static void clear_all_order_lights() {
     HardwareOrder order_types[3] = {
         HARDWARE_ORDER_UP,
@@ -37,6 +33,7 @@ static void sigint_handler(int sig) {
 }
 
 int main() {
+	//Checks to make sure everything works fine with hardware
     int error = hardware_init();
     if(error != 0){
         fprintf(stderr, "Unable to initialize hardware\n");
@@ -44,7 +41,11 @@ int main() {
     }
 	clear_all_order_lights();
     signal(SIGINT, sigint_handler);
-	elevator_initElevator(elevator);
+	//Harware checks done
+	Elevator heis;
+	Elevator* elevator;
+	elevator_initElevator(heis);
+	elevator = &heis;
 
 
 	while (true) {
