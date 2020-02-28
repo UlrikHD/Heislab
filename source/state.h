@@ -27,6 +27,6 @@ void state_stateSwitch(Elevator* elevator);
 
 int state_atFloor();
 
-//void state_findFloor(Elevator* elevator) 
+void state_findFloor(Elevator* elevator); 
 
 #endif

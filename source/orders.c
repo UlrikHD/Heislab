@@ -1,5 +1,5 @@
 #include "orders.h"
-/*
+
 void orders_lightOrders(Elevator* elevator) {
 	for (int i = 0; i < elevator->floorsNum; ++i) {
 		for (int j = HARDWARE_ORDER_UP; j <= HARDWARE_ORDER_DOWN; ++j) {
@@ -80,8 +80,10 @@ void orders_getOrders(Elevator* elevator) {
 }
 
 void orders_orderDone(Elevator* elevator) {
-	if (elevator->state = AT_FLOOR) {
-		elevator->orders[elevator->currentFloor] = {false, false, false};
+	if (elevator->state == AT_FLOOR) {
+		for (int i = 0; i < elevator->buttonNum; ++i) {
+			elevator->orders[elevator->currentFloor][i] = false;
+		}
 	}
 }
 
@@ -121,5 +123,5 @@ bool orders_activatedStopButton() {
 		return false;
 	}
 }
-*/
+
 

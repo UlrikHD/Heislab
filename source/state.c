@@ -22,7 +22,7 @@ int state_atFloor() {
 	}
 	return -1;
 }
-/*
+
 void state_findFloor(Elevator* elevator) {
 	if (state_atFloor() == -1) {
 		if (elevator->currentFloor < elevator->nextFloor) {
@@ -34,7 +34,7 @@ void state_findFloor(Elevator* elevator) {
 		elevator->state = MOVING;
 	}
 }
-*/
+
 void state_stateSwitch(Elevator* p_elev) {
 	switch (p_elev->state){
 		case IDLE: {
@@ -44,8 +44,7 @@ void state_stateSwitch(Elevator* p_elev) {
 		}
 		case MOVING: {
 			hardware_command_door_open(0);
-			state_checkStopButton(p_elev);
-			if (order_getDirection(p_elev) == 1) {
+			if (orders_getDirection(p_elev) == 1) {
 				hardware_command_movement(HARDWARE_MOVEMENT_UP);
 				p_elev->nextFloor += p_elev->currentFloor;
 				printf("Moving up\n");
@@ -71,7 +70,7 @@ void state_stateSwitch(Elevator* p_elev) {
 		case EMERGENCY_STOP: {
 			hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 			hardware_command_stop_light(1);
-			if(state_atFloor != -1){
+			if(state_atFloor() != -1){
 				hardware_command_door_open(1);
 			}
 			orders_emptyOrders(p_elev);
