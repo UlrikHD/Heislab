@@ -1,4 +1,4 @@
-#include "../header/state.h"
+#include "state.h"
 
 
 void state_startTimer(Elevator* p_elev) {

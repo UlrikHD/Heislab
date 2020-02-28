@@ -4,10 +4,10 @@
 #include <time.h>
 
 
-#include "driver/hardware.h"
-#include "header/state.h"
-#include "header/orders.h"
-#include "header/elevator.h"
+#include "hardware.h"
+#include "state.h"
+#include "orders.h"
+#include "elevator.h"
 
 
 

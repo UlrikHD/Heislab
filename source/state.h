@@ -10,8 +10,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include "../driver/hardware.h"
-#include "../driver/io.h"
+#include "hardware.h"
+#include "driver/io.h"
 #include "orders.h"
 #include "elevator.h"
 

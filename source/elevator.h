@@ -3,9 +3,9 @@
 
 #include <time.h>
 #include <stdbool.h>
-#include "../driver/hardware.h"
-#include "../driver/io.h"
-#include "../driver/channels.h"
+#include "hardware.h"
+#include "driver/io.h"
+#include "driver/channels.h"
 
 #define BUTTON_NUM 3
 

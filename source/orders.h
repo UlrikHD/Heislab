@@ -8,7 +8,7 @@
 
 #include "elevator.h"
 #include <stdbool.h>
-#include "../driver/hardware.h"
+#include "hardware.h"
 
 #define ORDER_DOWN 1
 #define ORDER_UP 0

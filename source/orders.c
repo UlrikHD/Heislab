@@ -1,4 +1,4 @@
-#include "../header/orders.h"
+#include "orders.h"
 
 void orders_lightOrders(Elevator* elevator) {
 	for (int i = 0; i < elevator->floorsNum; ++i) {
