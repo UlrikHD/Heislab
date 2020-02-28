@@ -38,6 +38,6 @@ typedef struct Elevator {
 
 bool elevator_doorObstructed(Elevator* elevator);
 
-void elevator_initElevator(Elevator elevator);
+void elevator_initElevator(Elevator* elevator);
 
 #endif

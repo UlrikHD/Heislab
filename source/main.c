@@ -10,6 +10,10 @@
 #include "elevator.h"
 
 
+
+
+
+
 static void clear_all_order_lights() {
     HardwareOrder order_types[3] = {
         HARDWARE_ORDER_UP,
@@ -44,9 +48,8 @@ int main() {
 	//Harware checks done
 	Elevator heis;
 	Elevator* elevator;
-	elevator_initElevator(heis);
+	elevator_initElevator(&heis);
 	elevator = &heis;
-
 
 	while (true) {
 		if (orders_activatedStopButton()) {
