@@ -1,7 +1,17 @@
 #ifndef ELEVATOR_H
 #define ELEVATOR_H
 
-#include "state.h"
+#include <time.h>
+#include <stdbool.h>
+
+typedef enum State{
+    IDLE,
+    MOVING,
+	AT_FLOOR,
+	STOP
+} State;
+
+
 
 /**
 * @brief Variable that decides number of floors
@@ -13,27 +23,25 @@
 //int buttnonNum = 3
 
 
-
-
 /**
 * @brief Struct that contains all the variables of the elevator.
 */
 typedef struct {
 
     int currentFloor;
-    int previousFloor;
+    int nextFloor;
     int direction;
     int buttnonNum = 3;
     int floorsNum = HARDWARE_NUMBER_OF_FLOORS;
 	clock_t timer;
-	int timerDone;
-	int obstruction
-    State state;
-    
-
+    double doorOpenTime = 6000000 //in microseconds
+    bool obstruction false;
+    State state = IDLE;
     bool orders[floorsNum][buttonNum]
 
 
-} Elevator
+} Elevator;
+
+bool elevator_doorObstructed(Elevator* elevator);
 
 #endif
