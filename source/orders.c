@@ -125,27 +125,20 @@ bool orders_activatedStopButton() {
 	}
 }
 
-void orders_orderIsSameFloor(Elevator* p_elevator) {
+bool orders_orderIsSameFloor(Elevator* p_elevator) {
 	int floor = elevator_atFloor();
 	if (floor != -1) {
 		for (int j = 0; j < BUTTON_NUM; ++j) {
 			if (p_elevator->orders[floor][j]) {
-				p_elevator->orders[floor][j] = false;
+				p_elevator->orders[floor][ORDER_DOWN] = false;
+				p_elevator->orders[floor][ORDER_UP] = false;
+				p_elevator->orders[floor][ORDER_INTERNAL] = false;
 				p_elevator->timer = clock();
+				orders_lightOrders(p_elevator);
+				return true;
 			}
 		}
 	}
-
-/*
-	for (int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; ++i) {
-		if (hardware_read_floor_sensor(i)) {
-			for (int j = 0; j < BUTTON_NUM; ++j) {
-				if (p_elevator->orders[i][j]) {
-					p_elevator->orders[i][j] = false;
-					p_elevator->timer = clock();
-				}
-			}
-		}
-	}*/
 	orders_lightOrders(p_elevator);
+	return false;
 }

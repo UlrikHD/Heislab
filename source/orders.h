@@ -26,6 +26,6 @@ bool orders_stopAtFloor(Elevator* p_elevator);
 
 bool orders_activatedStopButton();
 
-void orders_orderIsSameFloor(Elevator* p_elevator);
+bool orders_orderIsSameFloor(Elevator* p_elevator);
 
 #endif

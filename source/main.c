@@ -112,7 +112,11 @@ int main() {
 				if (!orders_activatedStopButton()) {
 					hardware_command_stop_light(0);
 					orders_getOrders(p_elevator);
-					//orders_orderIsSameFloor(p_elevator);
+					bool orderSameFloor = orders_orderIsSameFloor(p_elevator);
+					if (orderSameFloor){
+						p_elevator->state = AT_FLOOR;
+						state_stateSwitch(p_elevator);
+						}
 					if (!elevator_doorObstructed(p_elevator) && state_timerDone(p_elevator)) {
 						hardware_command_door_open(0);
 						if (!orders_noOrders(p_elevator)) {
