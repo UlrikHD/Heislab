@@ -9,19 +9,19 @@
 #define ORDER_UP 0
 #define ORDER_INTERNAL 2
 
-void orders_lightOrders(Elevator* elevator);
+void orders_lightOrders(Elevator* p_elevator);
 
-int orders_getDirection(Elevator* elevator);
+int orders_getDirection(Elevator* p_elevator);
 
-bool orders_noOrders(Elevator* elevator);
+bool orders_noOrders(Elevator* p_elevator);
 
-void orders_emptyOrders(Elevator* elevator);
+void orders_emptyOrders(Elevator* p_elevator);
 
-void orders_getOrders(Elevator* elevator);
+void orders_getOrders(Elevator* p_elevator);
 
-void orders_orderDone(Elevator* elevator);
+void orders_orderDone(Elevator* p_elevator);
 
-bool orders_stopAtFloor(Elevator* elevator);
+bool orders_stopAtFloor(Elevator* p_elevator);
 
 bool orders_activatedStopButton();
 

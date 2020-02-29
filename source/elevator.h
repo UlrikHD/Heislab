@@ -3,6 +3,7 @@
 
 #include <time.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include "hardware.h"
 #include "driver/io.h"
 #include "driver/channels.h"
@@ -36,8 +37,8 @@ typedef struct Elevator {
 
 } Elevator;
 
-bool elevator_doorObstructed(Elevator* elevator);
+bool elevator_doorObstructed(Elevator* p_elevator);
 
-void elevator_initElevator(Elevator* elevator);
+void elevator_initElevator(Elevator* p_elevator);
 
 #endif

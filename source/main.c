@@ -3,6 +3,7 @@
 #include <signal.h>
 #include <time.h>
 
+
 #include "hardware.h"
 #include "state.h"
 #include "orders.h"
@@ -42,83 +43,84 @@ int main() {
     signal(SIGINT, sigint_handler);
 	//Harware checks done
 	Elevator heis;
-	Elevator* elevator;
+	Elevator* p_elevator;
 	elevator_initElevator(&heis);
-	elevator = &heis;
+	p_elevator = &heis;
+
 
 	while (true) {
 		if (orders_activatedStopButton()) {
-			elevator->state = EMERGENCY_STOP;
-			state_stateSwitch(elevator);
+			p_elevator->state = EMERGENCY_STOP;
+			state_stateSwitch(p_elevator);
 		}
-		switch (elevator->state) {
+		switch (p_elevator->state) {
 			case IDLE:
-				state_findFloor(elevator);
-				orders_getOrders(elevator);
-				if (!orders_noOrders(elevator)) {
-					elevator->direction = orders_getDirection(elevator);
-					elevator->state = MOVING;
-					state_stateSwitch(elevator);
+				state_findFloor(p_elevator);
+				orders_getOrders(p_elevator);
+				if (!orders_noOrders(p_elevator)) {
+					p_elevator->direction = orders_getDirection(p_elevator);
+					p_elevator->state = MOVING;
+					state_stateSwitch(p_elevator);
 				}
 				break;
 			case MOVING:
-				orders_getOrders(elevator);
-				elevator->direction = orders_getDirection(elevator);
+				orders_getOrders(p_elevator);
+				p_elevator->direction = orders_getDirection(p_elevator);
 				if (state_atFloor() != -1) {
-					elevator->currentFloor = state_atFloor();
-					if (orders_stopAtFloor(elevator)) {
-						elevator->state = AT_FLOOR;
-						orders_orderDone(elevator);
-						state_stateSwitch(elevator);
+					p_elevator->currentFloor = state_atFloor();
+					if (orders_stopAtFloor(p_elevator)) {
+						p_elevator->state = AT_FLOOR;
+						orders_orderDone(p_elevator);
+						state_stateSwitch(p_elevator);
 					}
 					else {
-						if (orders_getDirection(elevator) == 1) {
+						if (orders_getDirection(p_elevator) == 1) {
 							hardware_command_movement(HARDWARE_MOVEMENT_UP);
-							elevator->nextFloor += elevator->currentFloor;
+							p_elevator->nextFloor += p_elevator->currentFloor;
 				}
 					else {
 							hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
-							elevator->nextFloor -= elevator->currentFloor;
+							p_elevator->nextFloor -= p_elevator->currentFloor;
 				}
 					}
 				}
 				break;
 			case AT_FLOOR:
-				orders_getOrders(elevator);
-				elevator->direction = orders_getDirection(elevator);
-				if (state_timerDone(elevator) && !elevator_doorObstructed(elevator)) {
+				orders_getOrders(p_elevator);
+				if (!elevator_doorObstructed(p_elevator) && state_timerDone(p_elevator)) {
 					hardware_command_door_open(0);
-					if (orders_noOrders(elevator)) {
-						elevator->state = IDLE;
-						state_stateSwitch(elevator);
+					p_elevator->direction = orders_getDirection(p_elevator);
+					if (orders_noOrders(p_elevator)) {
+						p_elevator->state = IDLE;
+						state_stateSwitch(p_elevator);
 					}
 					else {
-						elevator->state = MOVING;
-						state_stateSwitch(elevator);
+						p_elevator->state = MOVING;
+						state_stateSwitch(p_elevator);
 					}
 				}
 				break;
 			case EMERGENCY_STOP:
 				if (!orders_activatedStopButton()) {
 					hardware_command_stop_light(0);
-					orders_getOrders(elevator);
-					if (state_timerDone(elevator) && !elevator_doorObstructed(elevator)) {
+					orders_getOrders(p_elevator);
+					if (!elevator_doorObstructed(p_elevator) && state_timerDone(p_elevator)) {
 						hardware_command_door_open(0);
-						if (!orders_noOrders(elevator)) {
-							elevator->state = MOVING;
-							state_stateSwitch(elevator);
+						if (!orders_noOrders(p_elevator)) {
+							p_elevator->state = MOVING;
+							state_stateSwitch(p_elevator);
 						}
 					}
 				}
 				break;
 			
 			default:
-				elevator->state = IDLE;
-				state_stateSwitch(elevator);
+				p_elevator->state = IDLE;
+				state_stateSwitch(p_elevator);
 				break;
 		}
 		
 	}
-	printf("1");
+	printf("n");
     return 0;
 }

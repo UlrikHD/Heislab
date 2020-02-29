@@ -1,12 +1,12 @@
 #include "state.h"
 
 
-void state_startTimer(Elevator* p_elev) {
-	p_elev->timer = clock();
+void state_updateTimer(Elevator* p_elevator) {
+	p_elevator->timer = clock();
 }
 
-bool state_timerDone(Elevator* elevator) {
-	if (clock() - elevator->timer < elevator->doorOpenTime){
+bool state_timerDone(Elevator* p_elevator) {
+	if (clock() - p_elevator->timer < p_elevator->doorOpenTime){
 		return false;
 	}
 	else {
@@ -23,9 +23,9 @@ int state_atFloor() {
 	return -1;
 }
 
-void state_findFloor(Elevator* elevator) {
+void state_findFloor(Elevator* p_elevator) {
 	if (state_atFloor() == -1) {
-		if (elevator->currentFloor < elevator->nextFloor) {
+		if (p_elevator->currentFloor < p_elevator->nextFloor) {
 			hardware_command_movement(HARDWARE_MOVEMENT_UP);
 		}
 		else {
@@ -37,8 +37,8 @@ void state_findFloor(Elevator* elevator) {
 	}
 }
 
-void state_stateSwitch(Elevator* p_elev) {
-	switch (p_elev->state){
+void state_stateSwitch(Elevator* p_elevator) {
+	switch (p_elevator->state){
 		case IDLE: {
 			printf("Idle\n");
 			//hardware_command_door_open(0);
@@ -46,14 +46,14 @@ void state_stateSwitch(Elevator* p_elev) {
 		}
 		case MOVING: {
 			//hardware_command_door_open(0);
-			if (orders_getDirection(p_elev) == 1) {
+			if (orders_getDirection(p_elevator) == 1) {
 				hardware_command_movement(HARDWARE_MOVEMENT_UP);
-				p_elev->nextFloor = p_elev->currentFloor + 1;
+				p_elevator->nextFloor = p_elevator->currentFloor + 1;
 				printf("Moving up\n");
 			}
 			else {
 				hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
-				p_elev->nextFloor = p_elev->currentFloor - 1;
+				p_elevator->nextFloor = p_elevator->currentFloor - 1;
 				printf("Moving down\n");
 			}
 			
@@ -61,12 +61,12 @@ void state_stateSwitch(Elevator* p_elev) {
 		}
 		case AT_FLOOR: {
 			printf("At floor\n");
-			p_elev->currentFloor = state_atFloor();
+			p_elevator->currentFloor = state_atFloor();
 			hardware_command_movement(HARDWARE_MOVEMENT_STOP);
-			hardware_command_floor_indicator_on(p_elev->currentFloor);
+			hardware_command_floor_indicator_on(p_elevator->currentFloor);
 			hardware_command_door_open(1);
-			orders_orderDone(p_elev);
-			state_startTimer(p_elev);
+			orders_orderDone(p_elevator);
+			state_updateTimer(p_elevator);
 			break;
 		}
 		case EMERGENCY_STOP: {
@@ -74,13 +74,13 @@ void state_stateSwitch(Elevator* p_elev) {
 			hardware_command_stop_light(1);
 			if(state_atFloor() != -1){
 				hardware_command_door_open(1);
-				p_elev->timer = clock();
+				state_updateTimer(p_elevator);
 			}
-			orders_emptyOrders(p_elev);
+			orders_emptyOrders(p_elevator);
 			break;
 		}
 		default: {
-			p_elev->state = IDLE;
+			p_elevator->state = IDLE;
 			break;
 		}
 	}
