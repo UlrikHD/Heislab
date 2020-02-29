@@ -41,4 +41,8 @@ bool elevator_doorObstructed(Elevator* p_elevator);
 
 void elevator_initElevator(Elevator* p_elevator);
 
+int elevator_atFloor();
+
+void elevator_updateFloors(Elevator* p_elevator);
+
 #endif

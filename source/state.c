@@ -14,17 +14,8 @@ bool state_timerDone(Elevator* p_elevator) {
 	}
 }
 
-int state_atFloor() {
-	for (int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; ++i) {
-		if (hardware_read_floor_sensor(i)) {
-			return i;
-		}
-	}
-	return -1;
-}
-
 void state_findFloor(Elevator* p_elevator) {
-	if (state_atFloor() == -1) {
+	if (elevator_atFloor() == -1) {
 		if (p_elevator->currentFloor < p_elevator->nextFloor) {
 			hardware_command_movement(HARDWARE_MOVEMENT_UP);
 		}
@@ -48,12 +39,12 @@ void state_stateSwitch(Elevator* p_elevator) {
 			//hardware_command_door_open(0);
 			if (orders_getDirection(p_elevator) == 1) {
 				hardware_command_movement(HARDWARE_MOVEMENT_UP);
-				p_elevator->nextFloor = p_elevator->currentFloor + 1;
+				//p_elevator->nextFloor = p_elevator->currentFloor + 1;
 				printf("Moving up\n");
 			}
 			else {
 				hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
-				p_elevator->nextFloor = p_elevator->currentFloor - 1;
+				//p_elevator->nextFloor = p_elevator->currentFloor - 1;
 				printf("Moving down\n");
 			}
 			
@@ -61,7 +52,7 @@ void state_stateSwitch(Elevator* p_elevator) {
 		}
 		case AT_FLOOR: {
 			printf("At floor\n");
-			p_elevator->currentFloor = state_atFloor();
+			p_elevator->currentFloor = elevator_atFloor();
 			hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 			hardware_command_floor_indicator_on(p_elevator->currentFloor);
 			hardware_command_door_open(1);
@@ -72,7 +63,7 @@ void state_stateSwitch(Elevator* p_elevator) {
 		case EMERGENCY_STOP: {
 			hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 			hardware_command_stop_light(1);
-			if(state_atFloor() != -1){
+			if(elevator_atFloor() != -1){
 				hardware_command_door_open(1);
 				state_updateTimer(p_elevator);
 			}

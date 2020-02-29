@@ -9,6 +9,7 @@
 #define ORDER_UP 0
 #define ORDER_INTERNAL 2
 
+
 void orders_lightOrders(Elevator* p_elevator);
 
 int orders_getDirection(Elevator* p_elevator);
@@ -24,5 +25,7 @@ void orders_orderDone(Elevator* p_elevator);
 bool orders_stopAtFloor(Elevator* p_elevator);
 
 bool orders_activatedStopButton();
+
+void orders_orderIsSameFloor(Elevator* p_elevator);
 
 #endif
