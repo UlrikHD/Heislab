@@ -56,7 +56,7 @@ typedef struct Elevator {
 bool elevator_doorObstructed(Elevator* p_elevator);
 
 /**
- * @brief Initialise the elevator variable for use.
+ * @brief Initialise the elevator variable.
  * 
  * @param[out] p_elevator    Elevator to be initialised.
  */
