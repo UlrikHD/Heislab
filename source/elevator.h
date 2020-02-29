@@ -7,7 +7,6 @@
 
 #include <time.h>
 #include <stdbool.h>
-#include <stdio.h>
 #include "hardware.h"
 #include "driver/io.h"
 #include "driver/channels.h"

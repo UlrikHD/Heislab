@@ -22,7 +22,7 @@ void elevator_initElevator(Elevator* p_elevator) {
 	p_elevator->buttonNum = BUTTON_NUM;
 	p_elevator->floorsNum = HARDWARE_NUMBER_OF_FLOORS;
 	p_elevator->timer = clock();
-	p_elevator->doorOpenTime = 3000000; //in microseconds
+	p_elevator->doorOpenTime = 3000000;
 	p_elevator->obstruction = false;
 	p_elevator->state = IDLE;
 	for (int i = 0; i < HARDWARE_NUMBER_OF_FLOORS; ++i) {

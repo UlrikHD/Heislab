@@ -1,3 +1,7 @@
+/**
+ * @file
+ * @brief Main file that creates the elevator program.
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
@@ -41,9 +45,9 @@ int main() {
     }
 	clear_all_order_lights();
     signal(SIGINT, sigint_handler);
-	//Harware checks done
+	//Hardware checks done
 
-	//Makes eleevator ready
+	//Make eleevator ready
 	Elevator heis;
 	Elevator* p_elevator;
 	elevator_initElevator(&heis);
@@ -53,7 +57,6 @@ int main() {
 	
 	}
 	//Elevator setup done
-
 
 	while (true) {
 		if (orders_activatedStopButton()) {
@@ -83,11 +86,9 @@ int main() {
 					else {
 						if (orders_getDirection(p_elevator) == 1) {
 							hardware_command_movement(HARDWARE_MOVEMENT_UP);
-							//p_elevator->nextFloor += p_elevator->currentFloor;
 						}
 						else {
 							hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
-							//p_elevator->nextFloor -= p_elevator->currentFloor;
 						}
 					}
 				}
@@ -139,6 +140,5 @@ int main() {
 		}
 		
 	}
-	printf("n");
     return 0;
 }

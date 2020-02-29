@@ -5,7 +5,6 @@
 #ifndef STATE_H
 #define STATE_H
 
-#include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include "hardware.h"
