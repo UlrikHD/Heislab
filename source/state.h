@@ -19,14 +19,14 @@
 
 
 
-void state_startTimer(Elevator* elevator);
+void state_updateTimer(Elevator* p_elevator);
 
-bool state_timerDone(Elevator* elevator);
+bool state_timerDone(Elevator* p_elevator);
 
-void state_stateSwitch(Elevator* elevator);
+void state_stateSwitch(Elevator* p_elevator);
 
 int state_atFloor();
 
-void state_findFloor(Elevator* elevator); 
+void state_findFloor(Elevator* p_elevator); 
 
 #endif
