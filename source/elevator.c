@@ -1,3 +1,7 @@
+/**
+ * @file
+ * @brief Implementation file for elevator library
+ */
 #include "elevator.h"
 
 bool elevator_doorObstructed(Elevator* p_elevator) {

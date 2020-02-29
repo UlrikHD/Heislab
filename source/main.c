@@ -132,8 +132,7 @@ int main() {
 					}
 				}
 				break;
-			
-			default:
+			default: //unødvendig
 				p_elevator->state = IDLE;
 				state_stateSwitch(p_elevator);
 				break;

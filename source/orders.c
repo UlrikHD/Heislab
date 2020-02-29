@@ -1,4 +1,9 @@
+/**
+ * @file
+ * @brief Implementation file for orders library
+ */
 #include "orders.h"
+
 
 void orders_lightOrders(Elevator* p_elevator) {
 	for (int i = 0; i < p_elevator->floorsNum; ++i) {
@@ -128,7 +133,7 @@ bool orders_activatedStopButton() {
 bool orders_orderIsSameFloor(Elevator* p_elevator) {
 	int floor = elevator_atFloor();
 	if (floor != -1) {
-		for (int j = 0; j < BUTTON_NUM; ++j) {
+		for (int j = 0; j < p_elevator->buttonNum; ++j) {
 			if (p_elevator->orders[floor][j]) {
 				p_elevator->orders[floor][ORDER_DOWN] = false;
 				p_elevator->orders[floor][ORDER_UP] = false;
