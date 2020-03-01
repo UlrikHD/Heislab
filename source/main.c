@@ -36,8 +36,6 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <time.h>
-
-
 #include "hardware.h"
 #include "state.h"
 #include "orders.h"
@@ -102,7 +100,7 @@ int main() {
 				break;
 			case MOVING:
 				orders_getOrders(p_elevator);
-				p_elevator->direction = orders_getDirection(p_elevator);
+				//p_elevator->direction = orders_getDirection(p_elevator);
 				if (elevator_atFloor() != -1) {
 					elevator_updateFloors(p_elevator);
 					if (orders_stopAtFloor(p_elevator)) {
@@ -111,12 +109,7 @@ int main() {
 						state_stateSwitch(p_elevator);
 					}
 					else {
-						if (orders_getDirection(p_elevator) == 1) {
-							hardware_command_movement(HARDWARE_MOVEMENT_UP);
-						}
-						else {
-							hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
-						}
+						state_continueMovement(p_elevator);
 					}
 				}
 				state_checkStop(p_elevator);
@@ -147,19 +140,10 @@ int main() {
 					if (orderSameFloor){
 						p_elevator->state = AT_FLOOR;
 						state_stateSwitch(p_elevator);
-						}
+					}
 					if (!elevator_doorObstructed(p_elevator) && state_timerDone(p_elevator)) {
 						hardware_command_door_open(0);
-						if (!orders_noOrders(p_elevator)) {
-							if (p_elevator->currentFloor < p_elevator->nextFloor) {
-								p_elevator->direction = 1;
-							}
-							else {
-								p_elevator->direction = -1;
-							}
-							p_elevator->state = MOVING;
-							state_stateSwitch(p_elevator);
-						}
+						state_getOrdersInStop(p_elevator);
 					}
 				}
 				break;

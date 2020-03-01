@@ -38,6 +38,7 @@ void state_stateSwitch(Elevator* p_elevator) {
 			printf("Idle\n");
 			break;
 		case MOVING:
+			p_elevator->direction = orders_getDirection(p_elevator);
 			if (orders_getDirection(p_elevator) == 1) {
 				hardware_command_movement(HARDWARE_MOVEMENT_UP);
 				printf("Moving up\n");
@@ -57,7 +58,7 @@ void state_stateSwitch(Elevator* p_elevator) {
 			orders_orderDone(p_elevator);
 			state_updateTimer(p_elevator);
 			break;
-		case EMERGENCY_STOP: //egentlig unødvendig
+		case EMERGENCY_STOP:
 			hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 			hardware_command_stop_light(1);
 			if(elevator_atFloor() != -1){
@@ -77,5 +78,28 @@ void state_checkStop(Elevator* p_elevator) {
 	if (orders_activatedStopButton()) {
 		p_elevator->state = EMERGENCY_STOP;
 		state_stateSwitch(p_elevator);
+	}
+}
+
+void state_getOrdersInStop(Elevator* p_elevator) {
+	if (!orders_noOrders(p_elevator)) {
+		if (p_elevator->currentFloor < p_elevator->nextFloor) {
+			p_elevator->direction = 1;
+		}
+		else {
+			p_elevator->direction = -1;
+		}
+		p_elevator->state = MOVING;
+		state_stateSwitch(p_elevator);
+	}
+}
+
+void state_continueMovement(Elevator* p_elevator) {
+	p_elevator->direction = orders_getDirection(p_elevator);
+	if (orders_getDirection(p_elevator) == 1) {
+		hardware_command_movement(HARDWARE_MOVEMENT_UP);
+	}
+	else {
+		hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
 	}
 }

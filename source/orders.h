@@ -89,7 +89,8 @@ void orders_orderDone(Elevator* p_elevator);
 bool orders_stopAtFloor(Elevator* p_elevator);
 
 /**
- * @brief Function that tells you if the stop button is pressed or not.
+ * @brief Simple function only meant for increasing the readability of the code, 
+ * tells you if the stop button is pressed or not.
  * 
  * @return @c true if the stop button is pressed, @c false otherwise.
  */

@@ -7,6 +7,7 @@
 
 #include <stdbool.h>
 #include <stdio.h>
+#include <time.h>
 #include "hardware.h"
 #include "driver/io.h"
 #include "orders.h"
@@ -55,7 +56,7 @@ void state_findFloor(Elevator* p_elevator);
  * @param[in, out] p_elevator    Elevator to have its state transition handled.
  * 
  * @warning With the current setup in main.c, unlike every other case, 
- * the EMERGENCY_STOP-case will constantly be looped over by main().
+ * the @c EMERGENCY_STOP -case will constantly be looped over by main().
  * This is desireable behaviour, but it also means you shouldn't add functionality
  * inside the case that you only want to run once when the state transition happen.
  */
@@ -66,8 +67,41 @@ void state_stateSwitch(Elevator* p_elevator);
  * 
  * If the stop button is pressed, the function will call on @c state_stateSwitch()
  * 
- * @param[in] p_elevator    Elevator to check for stop request.
+ * @param[in, out] p_elevator    Elevator to check for stop request.
  */
 void state_checkStop(Elevator* p_elevator);
+
+/**
+ * @brief Function that handles requests while the elevator is in @c EMERGENCY_STOP state.
+ * 
+ * @param[in, out] p_elevator    Elevator in @c EMERGENCY_STOP to have its requests handled.
+ * 
+ * @warning This function will check if Elevator got any orders and with its own 
+ * internal logic decide which direction to go. @c orders_getDirection() should not be
+ * used in tandem (in @c EMERGENCY_STOP state) with this function as 
+ * @c orders_getDirection() is not designed to handle an Elevator that has 
+ * stopped between two floors.
+ * 
+ * @warning The function will switch Elevator.state to @c MOVING and call on 
+ * @c state_stateSwitch() if it finds any orders
+ */
+void state_getOrdersInStop(Elevator* p_elevator);
+
+/**
+ * @brief Simple function only meant for increasing the readability of the code, 
+ * makes sure the elevator keeps moving in the right direction
+ * 
+ * @param[in, out] p_elevator    Elevator in @c EMERGENCY_STOP to have its requests handled.
+ * 
+ * @warning This function will check if Elevator got any orders and with its own 
+ * internal logic decide which direction to go. @c orders_getDirection() should not be
+ * used in tandem (in @c EMERGENCY_STOP state) with this function as 
+ * @c orders_getDirection() is not designed to handle an Elevator that has 
+ * stopped between two floors.
+ * 
+ * @warning The function will switch Elevator.state to @c MOVING and call on 
+ * @c state_stateSwitch() if it finds any orders
+ */
+void state_continueMovement(Elevator* p_elevator);
 
 #endif
