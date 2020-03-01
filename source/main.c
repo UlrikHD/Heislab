@@ -34,8 +34,8 @@
  */
 
 /*
-Main er ikke fullt dokumentert med doxygen ettersom vi tolket "Alle offentlige APIer s
-kal være dokumentert med kommentarer som Doxygen kan lese. Med offentlige APIer
+Main er ikke fullt dokumentert med doxygen ettersom vi tolket "Alle offentlige APIer 
+skal være dokumentert med kommentarer som Doxygen kan lese. Med offentlige APIer
 menes alle funksjoner og definerte datatyper som ligger tilgjengelig i headerfiler (.h-filer)."
 som at main ikke skal kommenteres til tross for at state machine er implementert i main.c
 */
