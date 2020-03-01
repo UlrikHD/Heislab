@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Implementation file for Elevator library
+ * @brief Implementation file for Elevator library.
  */
 #include "elevator.h"
 

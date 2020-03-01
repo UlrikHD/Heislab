@@ -73,7 +73,7 @@ int main() {
     }
 	clear_all_order_lights();
     signal(SIGINT, sigint_handler);
-	//Hardware checks done
+	//Hardware checks finished
 
 	//Make elevator ready
 	Elevator heis;

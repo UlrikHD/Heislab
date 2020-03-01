@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Implementation file for state library
+ * @brief Implementation file for state library.
  */
 #include "state.h"
 

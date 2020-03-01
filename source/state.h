@@ -7,7 +7,7 @@
 
 #include <stdbool.h>
 //#include <stdio.h>
-#include <time.h>
+//#include <time.h>
 #include "hardware.h"
 #include "driver/io.h"
 #include "orders.h"
@@ -28,7 +28,8 @@ void state_findFloor(const Elevator* p_elevator);
  * 
  * The function is a single switch that contains all the necessary logic to take 
  * care of a state switch of the Elevator. The switch contains five cases:
- *      - @c IDLE - used only print out the state transition for easier monitoring of states.
+ *      - @c IDLE - used more actively during debugging, is now only used to catch cases 
+ * where @c state_stateSwitch() is called while Elevator is in IDLE.
  *      - @c MOVING - starts the motor.
  *      - @c AT_FLOOR - opens the door, starts the timer and removes completed order,
  *      - @c EMERGENCY_STOP - stops the motor, empties the queue and activates the stop light.

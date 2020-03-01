@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Implementation file for orders library
+ * @brief Implementation file for orders library.
  */
 #include "orders.h"
 

@@ -15,7 +15,7 @@
 
 
 /**
- * @brief Updates every order lights of the elevator
+ * @brief Updates every order light of the elevator
  *
  * @param[in] p_elevator    Elevator whose list will decide which order lights to be 
  * turned on/off.

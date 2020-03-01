@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Library for Elevator setup and basic functions connected to the elevator
+ * @brief Library for Elevator setup and basic functions connected to the elevator.
  */
 #ifndef ELEVATOR_H
 #define ELEVATOR_H
