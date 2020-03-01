@@ -55,3 +55,12 @@ void elevator_updateFloors(Elevator* p_elevator) {
 void elevator_updateTimer(Elevator* p_elevator) {
 	p_elevator->timer = clock();
 }
+
+bool elevator_timerDone(const Elevator* p_elevator) {
+	if (clock() - p_elevator->timer < p_elevator->doorOpenTime){
+		return false;
+	}
+	else {
+		return true;
+	}
+}

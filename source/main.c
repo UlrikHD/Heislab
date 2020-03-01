@@ -117,7 +117,7 @@ int main() {
 			case AT_FLOOR:
 				orders_getOrders(p_elevator);
 				orders_orderIsSameFloor(p_elevator);
-				if (!elevator_doorObstructed(p_elevator) && state_timerDone(p_elevator)) {
+				if (!elevator_doorObstructed(p_elevator) && elevator_timerDone(p_elevator)) {
 					hardware_command_door_open(0);
 					p_elevator->direction = orders_getDirection(p_elevator);
 					if (orders_noOrders(p_elevator)) {
@@ -141,7 +141,7 @@ int main() {
 						p_elevator->state = AT_FLOOR;
 						state_stateSwitch(p_elevator);
 					}
-					if (!elevator_doorObstructed(p_elevator) && state_timerDone(p_elevator)) {
+					if (!elevator_doorObstructed(p_elevator) && elevator_timerDone(p_elevator)) {
 						hardware_command_door_open(0);
 						state_getOrdersInStop(p_elevator);
 					}

@@ -5,15 +5,6 @@
 #include "state.h"
 
 
-bool state_timerDone(const Elevator* p_elevator) {
-	if (clock() - p_elevator->timer < p_elevator->doorOpenTime){
-		return false;
-	}
-	else {
-		return true;
-	}
-}
-
 void state_findFloor(const Elevator* p_elevator) {
 	if (elevator_atFloor() == -1) {
 		if (p_elevator->currentFloor < p_elevator->nextFloor) {

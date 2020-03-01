@@ -86,4 +86,15 @@ void elevator_updateFloors(Elevator* p_elevator);
 void elevator_updateTimer(Elevator* p_elevator);
 
 
+/**
+ * @brief Function that checks if more time has passed than set 
+ * by @c Elevator.doorOpenTime since @c Elevator.timer was updated.
+ *
+ * @param[in] p_elevator    Elevator to have its time checked.
+ *
+ * @return @c true if more than has passed than @c Elevator.doorOpenTime defines,
+ * @c false if less time has passed.
+ */
+bool elevator_timerDone(const Elevator* p_elevator);
+
 #endif
