@@ -51,3 +51,7 @@ void elevator_updateFloors(Elevator* p_elevator) {
 		}
 	}
 }
+
+void elevator_updateTimer(Elevator* p_elevator) {
+	p_elevator->timer = clock();
+}

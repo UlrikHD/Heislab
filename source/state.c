@@ -5,10 +5,6 @@
 #include "state.h"
 
 
-void state_updateTimer(Elevator* p_elevator) {
-	p_elevator->timer = clock();
-}
-
 bool state_timerDone(const Elevator* p_elevator) {
 	if (clock() - p_elevator->timer < p_elevator->doorOpenTime){
 		return false;
@@ -55,14 +51,14 @@ void state_stateSwitch(Elevator* p_elevator) {
 			hardware_command_floor_indicator_on(p_elevator->currentFloor);
 			hardware_command_door_open(1);
 			orders_orderDone(p_elevator);
-			state_updateTimer(p_elevator);
+			elevator_updateTimer(p_elevator);
 			break;
 		case EMERGENCY_STOP:
 			hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 			hardware_command_stop_light(1);
 			if(elevator_atFloor() != -1){
 				hardware_command_door_open(1);
-				state_updateTimer(p_elevator);
+				elevator_updateTimer(p_elevator);
 			}
 			orders_emptyOrders(p_elevator);
 			break;

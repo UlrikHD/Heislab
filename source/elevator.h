@@ -76,4 +76,14 @@ int elevator_atFloor();
  */
 void elevator_updateFloors(Elevator* p_elevator);
 
+
+/**
+ * @brief Simple function only meant for increasing the readability of the code, 
+ * updates Elevator.time.
+ *
+ * @param[out] p_elevator    Elevator that will have its timer updated.
+ */
+void elevator_updateTimer(Elevator* p_elevator);
+
+
 #endif

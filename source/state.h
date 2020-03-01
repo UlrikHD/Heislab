@@ -15,14 +15,6 @@
 
 
 /**
- * @brief Simple function only meant for increasing the readability of the code, 
- * updates Elevator.time.
- *
- * @param[out] p_elevator    Elevator that will have its timer updated.
- */
-void state_updateTimer(Elevator* p_elevator);
-
-/**
  * @brief Function that checks if more time has passed than set 
  * by @c Elevator.doorOpenTime since @c Elevator.timer was updated.
  *
