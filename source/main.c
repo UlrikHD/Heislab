@@ -48,7 +48,6 @@ static void clear_all_order_lights() {
         HARDWARE_ORDER_INSIDE,
         HARDWARE_ORDER_DOWN
     };
-
     for(int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++) {
         for(int i = 0; i < 3; i++){
             HardwareOrder type = order_types[i];
@@ -64,6 +63,7 @@ static void sigint_handler(int sig) {
     exit(0);
 }
 
+
 int main() {
 	//Checks to make sure everything works fine with hardware
     int error = hardware_init();
@@ -75,7 +75,7 @@ int main() {
     signal(SIGINT, sigint_handler);
 	//Hardware checks done
 
-	//Make eleevator ready
+	//Make elevator ready
 	Elevator heis;
 	Elevator* p_elevator;
 	elevator_initElevator(&heis);
@@ -84,7 +84,7 @@ int main() {
 		state_findFloor(p_elevator);
 	
 	}
-	//Elevator setup done
+	//Elevator setup done - defined state found
 
 	while (true) {
 		switch (p_elevator->state) {
@@ -100,7 +100,7 @@ int main() {
 				break;
 			case MOVING:
 				orders_getOrders(p_elevator);
-				//p_elevator->direction = orders_getDirection(p_elevator);
+				p_elevator->direction = orders_getDirection(p_elevator);
 				if (elevator_atFloor() != -1) {
 					elevator_updateFloors(p_elevator);
 					if (orders_stopAtFloor(p_elevator)) {
@@ -147,7 +147,7 @@ int main() {
 					}
 				}
 				break;
-			default: //unødvendig
+			default:
 				p_elevator->state = IDLE;
 				state_stateSwitch(p_elevator);
 				break;

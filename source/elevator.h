@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Library for elevator setup and basic functions connected to the elevator
+ * @brief Library for Elevator setup and basic functions connected to the elevator
  */
 #ifndef ELEVATOR_H
 #define ELEVATOR_H
@@ -15,47 +15,47 @@
 
 
 /**
-* @brief Enum for the different states the elevator can be in.
+* @brief Enum for the different states the Elevator can be in.
 */
 typedef enum State{
-    IDLE, /*!< State for when the elevator sits with no orders to service.  */
-    MOVING, /*!< State for when the elevator is on the move */
-	AT_FLOOR, /*!< State for when the elevator has reached a floor and services an order. */
+    IDLE, /*!< State for when the Elevator sits with no orders to service.  */
+    MOVING, /*!< State for when the Elevator is on the move */
+	AT_FLOOR, /*!< State for when the Elevator has reached a floor and services an order. */
 	EMERGENCY_STOP /*!< State for when the stop button has been pressed */
 } State;
 
 /**
-* @brief Struct that contains all the variables of the elevator.
+* @brief Struct that contains all the variables of the Elevator.
 */
 typedef struct Elevator {
 
-    int currentFloor; /*!< Variable keeping tabs on last registered floor of elevator */
-    int nextFloor; /*!< Variable showing next floor the elevator will pass */
-    int direction; /*!< Keeping note on which way the elevator is going, 1 for up and -1 for down */
+    int currentFloor; /*!< Variable keeping tabs on last registered floor of Elevator */
+    int nextFloor; /*!< Variable showing next floor the Elevator will pass */
+    int direction; /*!< Keeping note on which way the Elevator is going, 1 for up and -1 for down */
     int buttonNum; /*!< Variable telling how many sort of order buttons there are */
-    int floorsNum; /*!< Variable telling how many floors the elevator got */
-	clock_t timer; /*!< Variable for storing time when elevator door opens */
-    double doorOpenTime; /*!< Variable deciding how long the elevator door should stay open, given in microseconds */
-    bool obstruction; /*!< Variable keeping tabs on whether or not the door is obstructed */
-    State state; /*!< Variable storing the state of the elevator */
+    int floorsNum; /*!< Variable telling how many floors the Elevator got */
+	clock_t timer; /*!< Variable for storing time when Elevator door opens */
+    double doorOpenTime; /*!< Variable deciding how long the Elevator door should stay open, given in microseconds */
+    State state; /*!< Variable storing the state of the Elevator */
     bool orders[HARDWARE_NUMBER_OF_FLOORS][BUTTON_NUM]; /*!< 2-dimensional list storing every order. 
-    *For second index, 0 = order up, 1 = order down and 2 = order inside elevator */
+    *For second index, 0 = order up, 1 = order down and 2 = order inside Elevator.
+    *First index represents the floor, 0 = first floor, etc.. */
 
 
 } Elevator;
 
 /**
  * @brief Checks if the elevator door is obstructed. 
- * If obstructed, resets the elevator timer.
+ * If obstructed, resets Elevator.timer
  *
- * @param[in] p_elevator    Elevator to be checked for obstruction
+ * @param[out] p_elevator    Elevator to be checked for obstruction
  *
  * @return @c true if door is open and obstructed, @c false otherwise.
  */
 bool elevator_doorObstructed(Elevator* p_elevator);
 
 /**
- * @brief Initialise the elevator variable.
+ * @brief Initialise the Elevator.
  * 
  * @param[out] p_elevator    Elevator to be initialised.
  */

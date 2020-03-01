@@ -6,7 +6,7 @@
 #define STATE_H
 
 #include <stdbool.h>
-#include <stdio.h>
+//#include <stdio.h>
 #include <time.h>
 #include "hardware.h"
 #include "driver/io.h"
@@ -16,7 +16,7 @@
 
 /**
  * @brief Simple function only meant for increasing the readability of the code, 
- * updates the elevator timer.
+ * updates Elevator.time.
  *
  * @param[out] p_elevator    Elevator that will have its timer updated.
  */
@@ -31,7 +31,7 @@ void state_updateTimer(Elevator* p_elevator);
  * @return @c true if more than has passed than @c Elevator.doorOpenTime defines,
  * @c false if less time has passed.
  */
-bool state_timerDone(Elevator* p_elevator);
+bool state_timerDone(const Elevator* p_elevator);
 
 /**
  * @brief Function used in @c IDLE state to find a floor if current location
@@ -39,19 +39,19 @@ bool state_timerDone(Elevator* p_elevator);
  *
  * @param[in] p_elevator    Elevator to ensure got a defined state and position.
  */
-void state_findFloor(Elevator* p_elevator); 
+void state_findFloor(const Elevator* p_elevator); 
 
 /**
  * @brief Primary function of state.h, takes care of all logic needed when
- * the elevator switches state.
+ * the Elevator switches state.
  * 
- * The function is a single switch that contains all the necessary logic to care of
- * of a state switch of the elevator. The switch contains five cases:
+ * The function is a single switch that contains all the necessary logic to take 
+ * care of a state switch of the Elevator. The switch contains five cases:
  *      - @c IDLE - used only print out the state transition for easier monitoring of states.
  *      - @c MOVING - starts the motor.
  *      - @c AT_FLOOR - opens the door, starts the timer and removes completed order,
  *      - @c EMERGENCY_STOP - stops the motor, empties the queue and activates the stop light.
- *      - @c default - should in theory never be called upon.
+ *      - @c default - should in theory never be called upon, will set Elevator.state to @c IDLE
  *
  * @param[in, out] p_elevator    Elevator to have its state transition handled.
  * 
@@ -72,7 +72,7 @@ void state_stateSwitch(Elevator* p_elevator);
 void state_checkStop(Elevator* p_elevator);
 
 /**
- * @brief Function that handles requests while the elevator is in @c EMERGENCY_STOP state.
+ * @brief Function that handles requests while the Elevator is in @c EMERGENCY_STOP state.
  * 
  * @param[in, out] p_elevator    Elevator in @c EMERGENCY_STOP to have its requests handled.
  * 
@@ -89,7 +89,7 @@ void state_getOrdersInStop(Elevator* p_elevator);
 
 /**
  * @brief Simple function only meant for increasing the readability of the code, 
- * makes sure the elevator keeps moving in the right direction.
+ * makes sure the Elevator keeps moving in the right direction.
  * 
  * @param[in, out] p_elevator    Elevator to continue its movement
  */

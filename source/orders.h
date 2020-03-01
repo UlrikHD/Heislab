@@ -20,29 +20,30 @@
  * @param[in] p_elevator    Elevator whose list will decide which order lights to be 
  * turned on/off.
  */
-void orders_lightOrders(Elevator* p_elevator);
+void orders_lightOrders(const Elevator* p_elevator);
 
 /**
- * @brief Function that decides which way the elevator will move.
+ * @brief Function that decides which way the Elevator will move.
  * 
+ * Alongisde @c orders_stopAtFloor(), the main logic of the queue system.
  * The function will prioritise orders that is in its current path, 
- * assuming the elevator will keep moving in its current direction.
+ * assuming the Elevator will keep moving in its current direction.
  *
  * @param[in] p_elevator    Elevator whose orders will be evaluated.
  *
  * @return 1 if direction is upwards and -1 if downwards. If there are no orders 
  * the function will return back the value @p p_elevator already contains.
  */
-int orders_getDirection(Elevator* p_elevator);
+int orders_getDirection(const Elevator* p_elevator);
 
 /**
- * @brief Checks if the elevator got any orders queued.
+ * @brief Checks if the Elevator got any orders queued.
  *
  * @param[in] p_elevator    Elevator to be checked for queued orders.
  *
- * @return @c true if @p p_elevator got any orders queued, @c false if not.
+ * @return @c false if @p p_elevator got any orders queued, @c true if not.
  */
-bool orders_noOrders(Elevator* p_elevator);
+bool orders_noOrders(const Elevator* p_elevator);
 
 /**
  * @brief Remove all orders queued and sets every entry in @c Elevator.orders 
@@ -55,7 +56,7 @@ bool orders_noOrders(Elevator* p_elevator);
 void orders_emptyOrders(Elevator* p_elevator);
 
 /**
- * @brief Function the fetches every order.
+ * @brief Function that fetches every order.
  * 
  * The function will call on @c orders_lightOrders() at the end to update lights.
  *
@@ -64,7 +65,7 @@ void orders_emptyOrders(Elevator* p_elevator);
 void orders_getOrders(Elevator* p_elevator);
 
 /**
- * @brief Function that erases orders in queue when the orders have been executed.
+ * @brief Function that erase orders in queue when the orders have been executed.
  *
  * @param[in, out] p_elevator    Elevator to have its queue updated.
  */
@@ -74,7 +75,7 @@ void orders_orderDone(Elevator* p_elevator);
  * @brief Function that stops the elevator if there are appropiate orders on the floor.
  *
  * This function is alongside the @c orders_getDirection() the main logic of the
- * elevator queue. This function will only call the elevator to stop on the floor 
+ * Elevator queue. This function will only call the Elevator to stop on the floor 
  * if there are orders on the floor that aligns with its current direction,
  * or regardless of direction if there are no orders past the current floor.
  * 
@@ -86,7 +87,7 @@ void orders_orderDone(Elevator* p_elevator);
  * 
  * @return @c true if @p p_elevator should stop, @c false if not.
  */
-bool orders_stopAtFloor(Elevator* p_elevator);
+bool orders_stopAtFloor(const Elevator* p_elevator);
 
 /**
  * @brief Simple function only meant for increasing the readability of the code, 
@@ -97,19 +98,19 @@ bool orders_stopAtFloor(Elevator* p_elevator);
 bool orders_activatedStopButton();
 
 /**
- * @brief Function that deals with orders on the same floor as the elevator
- * currently sits idle on.
+ * @brief Function that deal with orders on the same floor as the Elevator
+ * currently sits still on.
  * 
  * This function was made to handle the special case of an order being placed at
- * the same floor as the ellevator is currently at. The function will reset the
+ * the same floor as the Elevator is currently at. The function will reset the
  * @c Elevator.timer and set all orders on that floor to false in the queue.
+ * The function @c orders_lightOrders() will also be called inside this function.
  * 
  * @param[in, out] p_elevator    Elevator to have its orders evaluated.
  * 
- * @warning This function will do the job of @c orders_orderDone for the floor the
- * elevator currently sits at. This means any orders that happen on the current
- * floor of the elevator will immediately be set to false if this function is run.
- * The function @c orders_lightOrders will also be called inside this function.
+ * @warning This function will do the job of @c orders_orderDone() for the floor the
+ * Elevator currently sits at. This means any orders that happen on the current
+ * floor of the Elevator will immediately be set to false if this function is run.
  * 
  * @return @c true if @p p_elevator got any orders on its current floor,
  * @c false if no order on its current floor.

@@ -9,7 +9,7 @@ void state_updateTimer(Elevator* p_elevator) {
 	p_elevator->timer = clock();
 }
 
-bool state_timerDone(Elevator* p_elevator) {
+bool state_timerDone(const Elevator* p_elevator) {
 	if (clock() - p_elevator->timer < p_elevator->doorOpenTime){
 		return false;
 	}
@@ -18,7 +18,7 @@ bool state_timerDone(Elevator* p_elevator) {
 	}
 }
 
-void state_findFloor(Elevator* p_elevator) {
+void state_findFloor(const Elevator* p_elevator) {
 	if (elevator_atFloor() == -1) {
 		if (p_elevator->currentFloor < p_elevator->nextFloor) {
 			hardware_command_movement(HARDWARE_MOVEMENT_UP);
@@ -35,22 +35,22 @@ void state_findFloor(Elevator* p_elevator) {
 void state_stateSwitch(Elevator* p_elevator) {
 	switch (p_elevator->state){
 		case IDLE: //egentlig unødvendig
-			printf("Idle\n");
+			//printf("Idle\n");
 			break;
 		case MOVING:
 			p_elevator->direction = orders_getDirection(p_elevator);
 			if (orders_getDirection(p_elevator) == 1) {
 				hardware_command_movement(HARDWARE_MOVEMENT_UP);
-				printf("Moving up\n");
+				//printf("Moving up\n");
 			}
 			else {
 				hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
-				printf("Moving down\n");
+				//printf("Moving down\n");
 			}
 			
 			break;
 		case AT_FLOOR:
-			printf("At floor\n");
+			//printf("At floor\n");
 			p_elevator->currentFloor = elevator_atFloor();
 			hardware_command_movement(HARDWARE_MOVEMENT_STOP);
 			hardware_command_floor_indicator_on(p_elevator->currentFloor);
@@ -67,7 +67,7 @@ void state_stateSwitch(Elevator* p_elevator) {
 			}
 			orders_emptyOrders(p_elevator);
 			break;
-		default: { //unødvendig
+		default: { 
 			p_elevator->state = IDLE;
 			break;
 		}

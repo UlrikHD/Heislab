@@ -5,7 +5,7 @@
 #include "orders.h"
 
 
-void orders_lightOrders(Elevator* p_elevator) {
+void orders_lightOrders(const Elevator* p_elevator) {
 	for (int i = 0; i < p_elevator->floorsNum; ++i) {
 		hardware_command_order_light(i, HARDWARE_ORDER_UP, p_elevator->orders[i][ORDER_UP]);
 		hardware_command_order_light(i, HARDWARE_ORDER_DOWN, p_elevator->orders[i][ORDER_DOWN]);
@@ -13,7 +13,7 @@ void orders_lightOrders(Elevator* p_elevator) {
 	}
 }
 
-int orders_getDirection(Elevator* p_elevator) {
+int orders_getDirection(const Elevator* p_elevator) {
 	if (p_elevator->direction == 1) {
 		for (int i = p_elevator->currentFloor + 1; i < p_elevator->floorsNum; ++i) {
 			for (int j = 0; j < p_elevator->buttonNum; ++j) {
@@ -50,7 +50,7 @@ int orders_getDirection(Elevator* p_elevator) {
 	return p_elevator->direction;
 }
 
-bool orders_noOrders(Elevator* p_elevator) {
+bool orders_noOrders(const Elevator* p_elevator) {
 	for (int i = 0; i < p_elevator->floorsNum; ++i) {
 		for (int j = 0; j < p_elevator->buttonNum; ++j) {
 			if (p_elevator->orders[i][j]) {
@@ -93,7 +93,7 @@ void orders_orderDone(Elevator* p_elevator) {
 	}
 }
 
-bool orders_stopAtFloor(Elevator* p_elevator) {
+bool orders_stopAtFloor(const Elevator* p_elevator) {
 	if (p_elevator->direction == 1) {
 		if (p_elevator->orders[p_elevator->currentFloor][ORDER_UP] || 
 			p_elevator->orders[p_elevator->currentFloor][ORDER_INTERNAL]) {
