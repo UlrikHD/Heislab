@@ -89,18 +89,9 @@ void state_getOrdersInStop(Elevator* p_elevator);
 
 /**
  * @brief Simple function only meant for increasing the readability of the code, 
- * makes sure the elevator keeps moving in the right direction
+ * makes sure the elevator keeps moving in the right direction.
  * 
- * @param[in, out] p_elevator    Elevator in @c EMERGENCY_STOP to have its requests handled.
- * 
- * @warning This function will check if Elevator got any orders and with its own 
- * internal logic decide which direction to go. @c orders_getDirection() should not be
- * used in tandem (in @c EMERGENCY_STOP state) with this function as 
- * @c orders_getDirection() is not designed to handle an Elevator that has 
- * stopped between two floors.
- * 
- * @warning The function will switch Elevator.state to @c MOVING and call on 
- * @c state_stateSwitch() if it finds any orders
+ * @param[in, out] p_elevator    Elevator to continue its movement
  */
 void state_continueMovement(Elevator* p_elevator);
 
