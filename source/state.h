@@ -61,6 +61,13 @@ void state_findFloor(Elevator* p_elevator);
  */
 void state_stateSwitch(Elevator* p_elevator);
 
+/**
+ * @brief Function that switches state to @c EMERGENCY_STOP if the stop button is pressed.
+ * 
+ * If the stop button is pressed, the function will call on @c state_stateSwitch()
+ * 
+ * @param[in] p_elevator    Elevator to check for stop request.
+ */
 void state_checkStop(Elevator* p_elevator);
 
 #endif
