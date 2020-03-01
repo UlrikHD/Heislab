@@ -34,11 +34,10 @@ void state_findFloor(const Elevator* p_elevator) {
 
 void state_stateSwitch(Elevator* p_elevator) {
 	switch (p_elevator->state){
-		case IDLE: //egentlig unødvendig
+		case IDLE: 
 			//printf("Idle\n");
 			break;
 		case MOVING:
-			p_elevator->direction = orders_getDirection(p_elevator);
 			if (orders_getDirection(p_elevator) == 1) {
 				hardware_command_movement(HARDWARE_MOVEMENT_UP);
 				//printf("Moving up\n");

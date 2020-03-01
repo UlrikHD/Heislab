@@ -100,7 +100,7 @@ int main() {
 				break;
 			case MOVING:
 				orders_getOrders(p_elevator);
-				p_elevator->direction = orders_getDirection(p_elevator);
+				//p_elevator->direction = orders_getDirection(p_elevator);
 				if (elevator_atFloor() != -1) {
 					elevator_updateFloors(p_elevator);
 					if (orders_stopAtFloor(p_elevator)) {
