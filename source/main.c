@@ -32,6 +32,13 @@
  * 
  * \subsection step4 Inside the "Heislab"-folder: Type "make clean" in the terminal.
  */
+
+/*
+Main er ikke fullt dokumentert med doxygen ettersom vi tolket "Alle offentlige APIer s
+kal være dokumentert med kommentarer som Doxygen kan lese. Med offentlige APIer
+menes alle funksjoner og definerte datatyper som ligger tilgjengelig i headerfiler (.h-filer)."
+som at main ikke skal kommenteres til tross for at state machine er implementert i main.c
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
@@ -100,9 +107,9 @@ int main() {
 				break;
 			case MOVING:
 				orders_getOrders(p_elevator);
-				//p_elevator->direction = orders_getDirection(p_elevator);
 				if (elevator_atFloor() != -1) {
 					elevator_updateFloors(p_elevator);
+					hardware_command_floor_indicator_on(p_elevator->currentFloor);
 					if (orders_stopAtFloor(p_elevator)) {
 						p_elevator->state = AT_FLOOR;
 						orders_orderDone(p_elevator);

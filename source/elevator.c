@@ -7,7 +7,6 @@
 bool elevator_doorObstructed(Elevator* p_elevator) {
 	if ((hardware_read_obstruction_signal() == 1) && io_read_bit(LIGHT_DOOR_OPEN)) {
 		p_elevator->timer = clock();
-		//printf("reset");
 		return true;
 	}
 	else {

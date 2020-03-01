@@ -6,8 +6,6 @@
 #define STATE_H
 
 #include <stdbool.h>
-//#include <stdio.h>
-//#include <time.h>
 #include "hardware.h"
 #include "driver/io.h"
 #include "orders.h"

@@ -22,24 +22,19 @@ void state_findFloor(const Elevator* p_elevator) {
 void state_stateSwitch(Elevator* p_elevator) {
 	switch (p_elevator->state){
 		case IDLE: 
-			//printf("Idle\n");
 			break;
 		case MOVING:
 			if (orders_getDirection(p_elevator) == 1) {
 				hardware_command_movement(HARDWARE_MOVEMENT_UP);
-				//printf("Moving up\n");
 			}
 			else {
 				hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
-				//printf("Moving down\n");
 			}
 			
 			break;
 		case AT_FLOOR:
-			//printf("At floor\n");
 			p_elevator->currentFloor = elevator_atFloor();
 			hardware_command_movement(HARDWARE_MOVEMENT_STOP);
-			hardware_command_floor_indicator_on(p_elevator->currentFloor);
 			hardware_command_door_open(1);
 			orders_orderDone(p_elevator);
 			elevator_updateTimer(p_elevator);
