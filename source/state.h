@@ -61,4 +61,6 @@ void state_findFloor(Elevator* p_elevator);
  */
 void state_stateSwitch(Elevator* p_elevator);
 
+void state_checkStop(Elevator* p_elevator);
+
 #endif

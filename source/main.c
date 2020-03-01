@@ -89,10 +89,7 @@ int main() {
 	//Elevator setup done
 
 	while (true) {
-		if (orders_activatedStopButton()) {
-			p_elevator->state = EMERGENCY_STOP;
-			state_stateSwitch(p_elevator);
-		}
+		state_checkStop(p_elevator);
 		switch (p_elevator->state) {
 			case IDLE:
 				state_findFloor(p_elevator);
@@ -102,6 +99,7 @@ int main() {
 					p_elevator->state = MOVING;
 					state_stateSwitch(p_elevator);
 				}
+				//state_checkStop(p_elevator);
 				break;
 			case MOVING:
 				orders_getOrders(p_elevator);
@@ -113,15 +111,8 @@ int main() {
 						orders_orderDone(p_elevator);
 						state_stateSwitch(p_elevator);
 					}
-					else {
-						if (orders_getDirection(p_elevator) == 1) {
-							hardware_command_movement(HARDWARE_MOVEMENT_UP);
-						}
-						else {
-							hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
-						}
-					}
 				}
+				//state_checkStop(p_elevator);
 				break;
 			case AT_FLOOR:
 				orders_getOrders(p_elevator);
@@ -138,8 +129,10 @@ int main() {
 						state_stateSwitch(p_elevator);
 					}
 				}
+				//state_checkStop(p_elevator);
 				break;
 			case EMERGENCY_STOP:
+				//state_checkStop(p_elevator);
 				if (!orders_activatedStopButton()) {
 					hardware_command_stop_light(0);
 					orders_getOrders(p_elevator);

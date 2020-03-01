@@ -9,8 +9,8 @@
 #include "elevator.h"
 #include "hardware.h"
 
-#define ORDER_DOWN 1
 #define ORDER_UP 0
+#define ORDER_DOWN 1
 #define ORDER_INTERNAL 2
 
 

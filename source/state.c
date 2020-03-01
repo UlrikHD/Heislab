@@ -72,3 +72,10 @@ void state_stateSwitch(Elevator* p_elevator) {
 		}
 	}
 }
+
+void state_checkStop(Elevator* p_elevator) {
+	if (orders_activatedStopButton()) {
+		p_elevator->state = EMERGENCY_STOP;
+		state_stateSwitch(p_elevator);
+	}
+}
