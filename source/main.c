@@ -2,6 +2,36 @@
  * @file
  * @brief Main file that creates the elevator program.
  */
+
+/*! \mainpage Index Page for Heisprosjekt - TTK4235
+ *
+ * \section intro_sec Introduction
+ *
+ * This projects contains 7 files written by the Aksel Næstby and Ulrik H.Digerud,
+ * and 5 files provided by the course TTK4235. This Index page contains
+ * documentation for the files:
+ * 
+ *  - main.c
+ *  - state.h
+ *  - state.c
+ *  - orders.h
+ *  - orders.c
+ *  - elevator.h
+ *  - elevator.c
+ *  - hardware.h - provided and commented by the course's TA
+ *
+ * \section install_sec Installation
+ *
+ * \subsection step1 Step 1: Clone the git repository https://github.com/UlrikHD/Heislab
+ * 
+ * \subsection step2 Step 2: Open the terminal and type "make" inside the "Heislab"-folder.
+ * 
+ * \subsection step3 Step 3: Run the program by typing "./elevator" in the same folder.
+ *
+ * \section uninstall_sec Uninstalling
+ * 
+ * \subsection step4 Inside the "Heislab"-folder: Type "make clean" in the terminal.
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
